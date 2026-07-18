@@ -1,0 +1,159 @@
+========================================================================
+dataset: counterfactual_difference_nla_v1   seed=20260718
+tokenizer: Qwen/Qwen2.5-7B-Instruct @ a09a35458c70
+rows=58320  semantic_pairs=7290  families=1240  unique_ordered_transitions=2514
+caption labels: {'transition': 38720, 'no_change': 19600}
+------------------------------------------------------------------------
+per-cell rows:
+   DISTRACTOR_EDIT: 19360
+           NULL_AA: 240
+           REVERSE: 19360
+       TARGET_EDIT: 19360
+per-split rows:
+               dev: 4800
+      test_context: 4800
+       test_entity: 2880
+         test_name: 1920
+   test_transition: 4800
+        test_value: 2880
+             train: 36240
+per-stratum rows: {'N': 22160, 'S': 36160}
+------------------------------------------------------------------------
+rejections: total=0
+------------------------------------------------------------------------
+audit: colors 42/52, names 91/124, cities 80/85
+preamble: 72 tokens, min final_pos observed 90 (required ≥52) [PROVISIONAL — awaiting user sign-off]
+========================================================================
+3 randomly sampled records (not selected):
+------------------------------------------------------------------------
+  pair_id: '228054bb535d9554-query_first-chat-nopre'
+  semantic_id: '228054bb535d9554'
+  family_id: '35187ffe6bf0165a'
+  stratum: 'N'
+  cell: 'DISTRACTOR_EDIT'
+  distractor_flavor: 'other_slot'
+  query_order: 'query_first'
+  prompt_format: 'chat'
+  preamble: False
+  split: 'train'
+  split_axis: 'iid'
+  template_id: 'n3'
+  entity_target: 'speaker_name'
+  entity_distractor: 'home_city'
+  edited_slot: 'slot2'
+  queried_slot: 'slot1'
+  value_old: 'Detroit'
+  value_new: 'Vancouver'
+  value_distractor: 'Detroit'
+  answer_old: 'Harold'
+  answer_new: 'Harold'
+  base_prompt: '<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\nQuestion: What is my name?\nThis is Harold speaking.\nI am calling from Detroit.\nAnswer:<|im_end|>\n<|im_start|>assistant\n'
+  cf_prompt: '<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\nQuestion: What is my name?\nThis is Harold speaking.\nI am calling from Vancouver.\nAnswer:<|im_end|>\n<|im_start|>assistant\n'
+  base_content: 'Question: What is my name?\nThis is Harold speaking.\nI am calling from Detroit.\nAnswer:'
+  cf_content: 'Question: What is my name?\nThis is Harold speaking.\nI am calling from Vancouver.\nAnswer:'
+  base_input_ids: len=49 [151644, 8948, 198, 2610, 525, 1207, 16948, 11, 3465, 553, 54364, 14817, 13, 1446, 525, 264, 10950, 17847, 13, 151645, 198, 151644, 872, 198, 14582, 25, 3555, 374, 847, 829, 5267, 1986, 374, 52115, 12094, 624, 40, 1079, 8098, 504, 19761, 624, 16141, 25, 151645, 198, 151644, 77091, 198]
+  cf_input_ids: len=49 [151644, 8948, 198, 2610, 525, 1207, 16948, 11, 3465, 553, 54364, 14817, 13, 1446, 525, 264, 10950, 17847, 13, 151645, 198, 151644, 872, 198, 14582, 25, 3555, 374, 847, 829, 5267, 1986, 374, 52115, 12094, 624, 40, 1079, 8098, 504, 22575, 624, 16141, 25, 151645, 198, 151644, 77091, 198]
+  edit_pos: 40
+  final_pos: 48
+  edit_token_decoded_base: ' Detroit'
+  edit_token_decoded_cf: ' Vancouver'
+  final_token_decoded: '\n'
+  answer_token_id_old: 52115
+  answer_token_id_new: 52115
+  answer_token_id_distractor: 19761
+  caption: 'PREDICTED_OUTPUT_CHANGE: NO_CHANGE'
+  caption_sha256: '503334fd60773dd7bf2abfc1e37f1c2917314746967b0378616867881bfcd4d1'
+  plumbing_only: False
+  crossed_with: '95716115228c78d4'
+  reverse_of: ''
+  behavioral_screen: None
+  oracle_patch_metrics: None
+  delta_norms: None
+------------------------------------------------------------------------
+  pair_id: 'b64dbeaade89b025-query_first-raw-nopre'
+  semantic_id: 'b64dbeaade89b025'
+  family_id: '8c2871a03cffccd9'
+  stratum: 'N'
+  cell: 'REVERSE'
+  distractor_flavor: ''
+  query_order: 'query_first'
+  prompt_format: 'raw'
+  preamble: False
+  split: 'train'
+  split_axis: 'iid'
+  template_id: 'n1'
+  entity_target: 'speaker_name'
+  entity_distractor: 'home_city'
+  edited_slot: 'slot1'
+  queried_slot: 'slot1'
+  value_old: 'Grace'
+  value_new: 'Sophie'
+  value_distractor: 'Havana'
+  answer_old: 'Grace'
+  answer_new: 'Sophie'
+  base_prompt: 'Question: What is my name?\nMy name is Grace.\nI live in Havana.\nAnswer:'
+  cf_prompt: 'Question: What is my name?\nMy name is Sophie.\nI live in Havana.\nAnswer:'
+  base_content: 'Question: What is my name?\nMy name is Grace.\nI live in Havana.\nAnswer:'
+  cf_content: 'Question: What is my name?\nMy name is Sophie.\nI live in Havana.\nAnswer:'
+  base_input_ids: len=19 [14582, 25, 3555, 374, 847, 829, 5267, 5050, 829, 374, 31071, 624, 40, 3887, 304, 85875, 624, 16141, 25]
+  cf_input_ids: len=19 [14582, 25, 3555, 374, 847, 829, 5267, 5050, 829, 374, 59310, 624, 40, 3887, 304, 85875, 624, 16141, 25]
+  edit_pos: 10
+  final_pos: 18
+  edit_token_decoded_base: ' Grace'
+  edit_token_decoded_cf: ' Sophie'
+  final_token_decoded: ':'
+  answer_token_id_old: 31071
+  answer_token_id_new: 59310
+  answer_token_id_distractor: 85875
+  caption: 'PREDICTED_OUTPUT_CHANGE: Grace -> Sophie'
+  caption_sha256: '54c4fcea41fead76bf0bf3042cd20eadb2daa58b82b7f72371d71f32286b1381'
+  plumbing_only: False
+  crossed_with: ''
+  reverse_of: 'dc850b0dc3a50ad5'
+  behavioral_screen: None
+  oracle_patch_metrics: None
+  delta_norms: None
+------------------------------------------------------------------------
+  pair_id: '109b5a5b5ae959a6-query_first-raw-pre'
+  semantic_id: '109b5a5b5ae959a6'
+  family_id: '261ddf0f1c4bfb67'
+  stratum: 'S'
+  cell: 'DISTRACTOR_EDIT'
+  distractor_flavor: 'crossed_query'
+  query_order: 'query_first'
+  prompt_format: 'raw'
+  preamble: True
+  split: 'test_context'
+  split_axis: 'context'
+  template_id: 's4'
+  entity_target: 'trell'
+  entity_distractor: 'sprock'
+  edited_slot: 'slot1'
+  queried_slot: 'slot2'
+  value_old: 'crimson'
+  value_new: 'tan'
+  value_distractor: 'crimson'
+  answer_old: 'brown'
+  answer_new: 'brown'
+  base_prompt: 'This page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nWhich color does trell mean?\nDefinition: sprock means crimson.\nDefinition: trell means brown.\nAnswer:'
+  cf_prompt: 'This page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nWhich color does trell mean?\nDefinition: sprock means tan.\nDefinition: trell means brown.\nAnswer:'
+  base_content: 'This page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nWhich color does trell mean?\nDefinition: sprock means crimson.\nDefinition: trell means brown.\nAnswer:'
+  cf_content: 'This page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nWhich color does trell mean?\nDefinition: sprock means tan.\nDefinition: trell means brown.\nAnswer:'
+  base_input_ids: len=96 [1986, 2150, 374, 949, 315, 264, 4586, 5290, 10158, 14548, 369, 264, 7424, 18132, 13, 576, 46769, 304, 419, 18132, 525, 2805, 323, 656, 12985, 11, 323, 1817, 825, 374, 8110, 553, 264, 3175, 3405, 911, 1181, 8794, 13, 64414, 525, 4588, 311, 17188, 1172, 389, 279, 12239, 2661, 304, 279, 21085, 5086, 11, 323, 311, 2506, 1449, 9851, 438, 9814, 438, 3204, 11, 1667, 825, 3409, 15356, 429, 374, 3322, 382, 23085, 1894, 1558, 4258, 654, 3076, 5267, 10398, 25, 274, 776, 377, 3363, 96019, 624, 10398, 25, 4258, 654, 3363, 13876, 624, 16141, 25]
+  cf_input_ids: len=96 [1986, 2150, 374, 949, 315, 264, 4586, 5290, 10158, 14548, 369, 264, 7424, 18132, 13, 576, 46769, 304, 419, 18132, 525, 2805, 323, 656, 12985, 11, 323, 1817, 825, 374, 8110, 553, 264, 3175, 3405, 911, 1181, 8794, 13, 64414, 525, 4588, 311, 17188, 1172, 389, 279, 12239, 2661, 304, 279, 21085, 5086, 11, 323, 311, 2506, 1449, 9851, 438, 9814, 438, 3204, 11, 1667, 825, 3409, 15356, 429, 374, 3322, 382, 23085, 1894, 1558, 4258, 654, 3076, 5267, 10398, 25, 274, 776, 377, 3363, 14197, 624, 10398, 25, 4258, 654, 3363, 13876, 624, 16141, 25]
+  edit_pos: 85
+  final_pos: 95
+  edit_token_decoded_base: ' crimson'
+  edit_token_decoded_cf: ' tan'
+  final_token_decoded: ':'
+  answer_token_id_old: 13876
+  answer_token_id_new: 13876
+  answer_token_id_distractor: 96019
+  caption: 'PREDICTED_OUTPUT_CHANGE: NO_CHANGE'
+  caption_sha256: '503334fd60773dd7bf2abfc1e37f1c2917314746967b0378616867881bfcd4d1'
+  plumbing_only: False
+  crossed_with: '177677e00b4786e7'
+  reverse_of: ''
+  behavioral_screen: None
+  oracle_patch_metrics: None
+  delta_norms: None

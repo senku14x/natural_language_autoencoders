@@ -76,6 +76,5 @@ def test_micro_end_to_end(tok):
 
     # chat splice must equal transformers' own chat rendering
     chat_row = next(r for r in rows if r.prompt_format == "chat")
-    ref = tok.apply_chat_template([{"role": "user", "content": chat_row.base_content}],
-                                  tokenize=True, add_generation_prompt=True)
-    assert ref == chat_row.base_input_ids
+    from ctf_data.pipeline import chat_template_ids
+    assert chat_template_ids(tok, chat_row.base_content) == list(chat_row.base_input_ids)

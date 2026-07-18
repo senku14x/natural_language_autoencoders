@@ -62,6 +62,19 @@ def tokenizer_file_hashes(cfg: dict) -> dict:
     return out
 
 
+def chat_template_ids(tok, content: str) -> list[int]:
+    """apply_chat_template(tokenize=True) normalized to a flat id list across
+    transformers API generations (v4 list / v5 dict of Encoding or nested list)."""
+    ref = tok.apply_chat_template([{"role": "user", "content": content}],
+                                  tokenize=True, add_generation_prompt=True)
+    ids = ref["input_ids"] if isinstance(ref, dict) else ref
+    if len(ids) and hasattr(ids[0], "ids"):
+        return list(ids[0].ids)
+    if len(ids) and isinstance(ids[0], list):
+        return list(ids[0])
+    return list(ids)
+
+
 def chat_wrap_parts(tok) -> tuple[str, str]:
     """Constant chat-template prefix/suffix around the user content."""
     rendered = tok.apply_chat_template(
@@ -291,10 +304,8 @@ def run(config_path: str, out_dir: str | None = None, print_records: int = 5) ->
     # our constant-wrap chat splice must equal transformers' own rendering
     chat_row = next((r for r in rows if r.prompt_format == "chat"), None)
     if chat_row is not None:
-        ref = tok.apply_chat_template(
-            [{"role": "user", "content": chat_row.base_content}],
-            tokenize=True, add_generation_prompt=True)
-        if ref != chat_row.base_input_ids:
+        ref_ids = chat_template_ids(tok, chat_row.base_content)
+        if ref_ids != list(chat_row.base_input_ids):
             raise SystemExit("chat splice != apply_chat_template — template drift")
 
     answer_ids = {}

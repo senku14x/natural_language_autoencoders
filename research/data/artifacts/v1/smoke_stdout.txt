@@ -1,0 +1,247 @@
+========================================================================
+dataset: counterfactual_difference_nla_v1   seed=20260718
+tokenizer: Qwen/Qwen2.5-7B-Instruct @ a09a35458c70
+rows=984  semantic_pairs=123  families=23  unique_ordered_transitions=80
+caption labels: {'transition': 640, 'no_change': 344}
+------------------------------------------------------------------------
+per-cell rows:
+   DISTRACTOR_EDIT: 320
+           NULL_AA: 24
+           REVERSE: 320
+       TARGET_EDIT: 320
+per-split rows:
+               dev: 144
+      test_context: 96
+       test_entity: 48
+         test_name: 48
+   test_transition: 96
+        test_value: 48
+             train: 504
+per-stratum rows: {'N': 392, 'S': 592}
+------------------------------------------------------------------------
+rejections: total=0
+------------------------------------------------------------------------
+audit: colors 42/52, names 91/124, cities 80/85
+preamble: 72 tokens, min final_pos observed 90 (required ≥52) [PROVISIONAL — awaiting user sign-off]
+========================================================================
+5 randomly sampled records (not selected):
+------------------------------------------------------------------------
+  pair_id: '07e32502948a7c63-query_last-chat-nopre'
+  semantic_id: '07e32502948a7c63'
+  family_id: '942e73dd1fc73cd4'
+  stratum: 'N'
+  cell: 'DISTRACTOR_EDIT'
+  distractor_flavor: 'other_slot'
+  query_order: 'query_last'
+  prompt_format: 'chat'
+  preamble: False
+  split: 'test_context'
+  split_axis: 'context'
+  template_id: 'n4'
+  entity_target: 'speaker_name'
+  entity_distractor: 'home_city'
+  edited_slot: 'slot2'
+  queried_slot: 'slot1'
+  value_old: 'Zurich'
+  value_new: 'Athens'
+  value_distractor: 'Zurich'
+  answer_old: 'Omar'
+  answer_new: 'Omar'
+  base_prompt: "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\nThe speaker's name is Omar.\nThe speaker lives in Zurich.\nQuestion: What is the speaker's name?\nAnswer:<|im_end|>\n<|im_start|>assistant\n"
+  cf_prompt: "<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\nThe speaker's name is Omar.\nThe speaker lives in Athens.\nQuestion: What is the speaker's name?\nAnswer:<|im_end|>\n<|im_start|>assistant\n"
+  base_content: "The speaker's name is Omar.\nThe speaker lives in Zurich.\nQuestion: What is the speaker's name?\nAnswer:"
+  cf_content: "The speaker's name is Omar.\nThe speaker lives in Athens.\nQuestion: What is the speaker's name?\nAnswer:"
+  base_input_ids: len=53 [151644, 8948, 198, 2610, 525, 1207, 16948, 11, 3465, 553, 54364, 14817, 13, 1446, 525, 264, 10950, 17847, 13, 151645, 198, 151644, 872, 198, 785, 18601, 594, 829, 374, 53558, 624, 785, 18601, 6305, 304, 71726, 624, 14582, 25, 3555, 374, 279, 18601, 594, 829, 5267, 16141, 25, 151645, 198, 151644, 77091, 198]
+  cf_input_ids: len=53 [151644, 8948, 198, 2610, 525, 1207, 16948, 11, 3465, 553, 54364, 14817, 13, 1446, 525, 264, 10950, 17847, 13, 151645, 198, 151644, 872, 198, 785, 18601, 594, 829, 374, 53558, 624, 785, 18601, 6305, 304, 45826, 624, 14582, 25, 3555, 374, 279, 18601, 594, 829, 5267, 16141, 25, 151645, 198, 151644, 77091, 198]
+  edit_pos: 35
+  final_pos: 52
+  edit_token_decoded_base: ' Zurich'
+  edit_token_decoded_cf: ' Athens'
+  final_token_decoded: '\n'
+  answer_token_id_old: 53558
+  answer_token_id_new: 53558
+  answer_token_id_distractor: 71726
+  caption: 'PREDICTED_OUTPUT_CHANGE: NO_CHANGE'
+  caption_sha256: '503334fd60773dd7bf2abfc1e37f1c2917314746967b0378616867881bfcd4d1'
+  plumbing_only: False
+  crossed_with: 'de64bf0e5388c31d'
+  reverse_of: ''
+  behavioral_screen: None
+  oracle_patch_metrics: None
+  delta_norms: None
+------------------------------------------------------------------------
+  pair_id: '60424e4e0979f120-query_last-raw-nopre'
+  semantic_id: '60424e4e0979f120'
+  family_id: '4723f89e7ac119ab'
+  stratum: 'S'
+  cell: 'DISTRACTOR_EDIT'
+  distractor_flavor: 'crossed_query'
+  query_order: 'query_last'
+  prompt_format: 'raw'
+  preamble: False
+  split: 'train'
+  split_axis: 'iid'
+  template_id: 's1'
+  entity_target: 'glorp'
+  entity_distractor: 'tob'
+  edited_slot: 'slot1'
+  queried_slot: 'slot2'
+  value_old: 'lime'
+  value_new: 'ivory'
+  value_distractor: 'lime'
+  answer_old: 'plum'
+  answer_new: 'plum'
+  base_prompt: 'In this task, tob means lime.\nIn this task, glorp means plum.\nWhat color is glorp?\nAnswer:'
+  cf_prompt: 'In this task, tob means ivory.\nIn this task, glorp means plum.\nWhat color is glorp?\nAnswer:'
+  base_content: 'In this task, tob means lime.\nIn this task, glorp means plum.\nWhat color is glorp?\nAnswer:'
+  cf_content: 'In this task, tob means ivory.\nIn this task, glorp means plum.\nWhat color is glorp?\nAnswer:'
+  base_input_ids: len=25 [641, 419, 3383, 11, 24406, 3363, 41719, 624, 641, 419, 3383, 11, 2770, 30115, 3363, 41172, 624, 3838, 1894, 374, 2770, 30115, 5267, 16141, 25]
+  cf_input_ids: len=25 [641, 419, 3383, 11, 24406, 3363, 69816, 624, 641, 419, 3383, 11, 2770, 30115, 3363, 41172, 624, 3838, 1894, 374, 2770, 30115, 5267, 16141, 25]
+  edit_pos: 6
+  final_pos: 24
+  edit_token_decoded_base: ' lime'
+  edit_token_decoded_cf: ' ivory'
+  final_token_decoded: ':'
+  answer_token_id_old: 41172
+  answer_token_id_new: 41172
+  answer_token_id_distractor: 41719
+  caption: 'PREDICTED_OUTPUT_CHANGE: NO_CHANGE'
+  caption_sha256: '503334fd60773dd7bf2abfc1e37f1c2917314746967b0378616867881bfcd4d1'
+  plumbing_only: False
+  crossed_with: 'b57f6450f66d6f7a'
+  reverse_of: ''
+  behavioral_screen: None
+  oracle_patch_metrics: None
+  delta_norms: None
+------------------------------------------------------------------------
+  pair_id: 'fc12ffd8cba6a211-query_last-chat-pre'
+  semantic_id: 'fc12ffd8cba6a211'
+  family_id: '23f9904060af2b13'
+  stratum: 'N'
+  cell: 'TARGET_EDIT'
+  distractor_flavor: ''
+  query_order: 'query_last'
+  prompt_format: 'chat'
+  preamble: True
+  split: 'train'
+  split_axis: 'iid'
+  template_id: 'n3'
+  entity_target: 'speaker_name'
+  entity_distractor: 'home_city'
+  edited_slot: 'slot1'
+  queried_slot: 'slot1'
+  value_old: 'Max'
+  value_new: 'Ralph'
+  value_distractor: 'Madrid'
+  answer_old: 'Max'
+  answer_new: 'Ralph'
+  base_prompt: '<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\nThis page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nThis is Max speaking.\nI am calling from Madrid.\nQuestion: What is my name?\nAnswer:<|im_end|>\n<|im_start|>assistant\n'
+  cf_prompt: '<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\nThis page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nThis is Ralph speaking.\nI am calling from Madrid.\nQuestion: What is my name?\nAnswer:<|im_end|>\n<|im_start|>assistant\n'
+  base_content: 'This page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nThis is Max speaking.\nI am calling from Madrid.\nQuestion: What is my name?\nAnswer:'
+  cf_content: 'This page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nThis is Ralph speaking.\nI am calling from Madrid.\nQuestion: What is my name?\nAnswer:'
+  base_input_ids: len=121 [151644, 8948, 198, 2610, 525, 1207, 16948, 11, 3465, 553, 54364, 14817, 13, 1446, 525, 264, 10950, 17847, 13, 151645, 198, 151644, 872, 198, 1986, 2150, 374, 949, 315, 264, 4586, 5290, 10158, 14548, 369, 264, 7424, 18132, 13, 576, 46769, 304, 419, 18132, 525, 2805, 323, 656, 12985, 11, 323, 1817, 825, 374, 8110, 553, 264, 3175, 3405, 911, 1181, 8794, 13, 64414, 525, 4588, 311, 17188, 1172, 389, 279, 12239, 2661, 304, 279, 21085, 5086, 11, 323, 311, 2506, 1449, 9851, 438, 9814, 438, 3204, 11, 1667, 825, 3409, 15356, 429, 374, 3322, 382, 1986, 374, 7487, 12094, 624, 40, 1079, 8098, 504, 24081, 624, 14582, 25, 3555, 374, 847, 829, 5267, 16141, 25, 151645, 198, 151644, 77091, 198]
+  cf_input_ids: len=121 [151644, 8948, 198, 2610, 525, 1207, 16948, 11, 3465, 553, 54364, 14817, 13, 1446, 525, 264, 10950, 17847, 13, 151645, 198, 151644, 872, 198, 1986, 2150, 374, 949, 315, 264, 4586, 5290, 10158, 14548, 369, 264, 7424, 18132, 13, 576, 46769, 304, 419, 18132, 525, 2805, 323, 656, 12985, 11, 323, 1817, 825, 374, 8110, 553, 264, 3175, 3405, 911, 1181, 8794, 13, 64414, 525, 4588, 311, 17188, 1172, 389, 279, 12239, 2661, 304, 279, 21085, 5086, 11, 323, 311, 2506, 1449, 9851, 438, 9814, 438, 3204, 11, 1667, 825, 3409, 15356, 429, 374, 3322, 382, 1986, 374, 39804, 12094, 624, 40, 1079, 8098, 504, 24081, 624, 14582, 25, 3555, 374, 847, 829, 5267, 16141, 25, 151645, 198, 151644, 77091, 198]
+  edit_pos: 98
+  final_pos: 120
+  edit_token_decoded_base: ' Max'
+  edit_token_decoded_cf: ' Ralph'
+  final_token_decoded: '\n'
+  answer_token_id_old: 7487
+  answer_token_id_new: 39804
+  answer_token_id_distractor: 24081
+  caption: 'PREDICTED_OUTPUT_CHANGE: Max -> Ralph'
+  caption_sha256: '0ddb267be1d800ce19bd251b3fa69c88daa3dd6279c5995c240cf5622d8d2878'
+  plumbing_only: False
+  crossed_with: '85f093f5d2310c78'
+  reverse_of: ''
+  behavioral_screen: None
+  oracle_patch_metrics: None
+  delta_norms: None
+------------------------------------------------------------------------
+  pair_id: '198c0c0d6d2961a6-query_first-raw-nopre'
+  semantic_id: '198c0c0d6d2961a6'
+  family_id: '2fa104217d60afb8'
+  stratum: 'N'
+  cell: 'REVERSE'
+  distractor_flavor: ''
+  query_order: 'query_first'
+  prompt_format: 'raw'
+  preamble: False
+  split: 'dev'
+  split_axis: 'iid'
+  template_id: 'n1'
+  entity_target: 'home_city'
+  entity_distractor: 'speaker_name'
+  edited_slot: 'slot2'
+  queried_slot: 'slot2'
+  value_old: 'Barcelona'
+  value_new: 'Auckland'
+  value_distractor: 'Ahmed'
+  answer_old: 'Barcelona'
+  answer_new: 'Auckland'
+  base_prompt: 'Question: What city do I live in?\nMy name is Ahmed.\nI live in Barcelona.\nAnswer:'
+  cf_prompt: 'Question: What city do I live in?\nMy name is Ahmed.\nI live in Auckland.\nAnswer:'
+  base_content: 'Question: What city do I live in?\nMy name is Ahmed.\nI live in Barcelona.\nAnswer:'
+  cf_content: 'Question: What city do I live in?\nMy name is Ahmed.\nI live in Auckland.\nAnswer:'
+  base_input_ids: len=21 [14582, 25, 3555, 3283, 653, 358, 3887, 304, 5267, 5050, 829, 374, 40669, 624, 40, 3887, 304, 26937, 624, 16141, 25]
+  cf_input_ids: len=21 [14582, 25, 3555, 3283, 653, 358, 3887, 304, 5267, 5050, 829, 374, 40669, 624, 40, 3887, 304, 53246, 624, 16141, 25]
+  edit_pos: 17
+  final_pos: 20
+  edit_token_decoded_base: ' Barcelona'
+  edit_token_decoded_cf: ' Auckland'
+  final_token_decoded: ':'
+  answer_token_id_old: 26937
+  answer_token_id_new: 53246
+  answer_token_id_distractor: 40669
+  caption: 'PREDICTED_OUTPUT_CHANGE: Barcelona -> Auckland'
+  caption_sha256: '828e27cc1efabef11743dd41f921f88779b0dcaa7d53693a643f35bc9ca9b951'
+  plumbing_only: False
+  crossed_with: ''
+  reverse_of: 'fd017679ede9387d'
+  behavioral_screen: None
+  oracle_patch_metrics: None
+  delta_norms: None
+------------------------------------------------------------------------
+  pair_id: 'f4114044e0889dd3-query_first-chat-pre'
+  semantic_id: 'f4114044e0889dd3'
+  family_id: '083ebbe634673de1'
+  stratum: 'N'
+  cell: 'REVERSE'
+  distractor_flavor: ''
+  query_order: 'query_first'
+  prompt_format: 'chat'
+  preamble: True
+  split: 'train'
+  split_axis: 'iid'
+  template_id: 'n2'
+  entity_target: 'home_city'
+  entity_distractor: 'speaker_name'
+  edited_slot: 'slot2'
+  queried_slot: 'slot2'
+  value_old: 'Brisbane'
+  value_new: 'Valencia'
+  value_distractor: 'Wei'
+  answer_old: 'Brisbane'
+  answer_new: 'Valencia'
+  base_prompt: '<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\nThis page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nQuestion: What city is my home in?\nI am Wei.\nMy home is in Brisbane.\nAnswer:<|im_end|>\n<|im_start|>assistant\n'
+  cf_prompt: '<|im_start|>system\nYou are Qwen, created by Alibaba Cloud. You are a helpful assistant.<|im_end|>\n<|im_start|>user\nThis page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nQuestion: What city is my home in?\nI am Wei.\nMy home is in Valencia.\nAnswer:<|im_end|>\n<|im_start|>assistant\n'
+  base_content: 'This page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nQuestion: What city is my home in?\nI am Wei.\nMy home is in Brisbane.\nAnswer:'
+  cf_content: 'This page is part of a general reading exercise collected for a records archive. The passages in this archive are short and self contained, and each one is followed by a single question about its contents. Readers are asked to rely only on the statements given in the passage itself, and to keep every reply as brief as possible, using one word whenever that is enough.\n\nQuestion: What city is my home in?\nI am Wei.\nMy home is in Valencia.\nAnswer:'
+  base_input_ids: len=122 [151644, 8948, 198, 2610, 525, 1207, 16948, 11, 3465, 553, 54364, 14817, 13, 1446, 525, 264, 10950, 17847, 13, 151645, 198, 151644, 872, 198, 1986, 2150, 374, 949, 315, 264, 4586, 5290, 10158, 14548, 369, 264, 7424, 18132, 13, 576, 46769, 304, 419, 18132, 525, 2805, 323, 656, 12985, 11, 323, 1817, 825, 374, 8110, 553, 264, 3175, 3405, 911, 1181, 8794, 13, 64414, 525, 4588, 311, 17188, 1172, 389, 279, 12239, 2661, 304, 279, 21085, 5086, 11, 323, 311, 2506, 1449, 9851, 438, 9814, 438, 3204, 11, 1667, 825, 3409, 15356, 429, 374, 3322, 382, 14582, 25, 3555, 3283, 374, 847, 2114, 304, 5267, 40, 1079, 52448, 624, 5050, 2114, 374, 304, 46235, 624, 16141, 25, 151645, 198, 151644, 77091, 198]
+  cf_input_ids: len=122 [151644, 8948, 198, 2610, 525, 1207, 16948, 11, 3465, 553, 54364, 14817, 13, 1446, 525, 264, 10950, 17847, 13, 151645, 198, 151644, 872, 198, 1986, 2150, 374, 949, 315, 264, 4586, 5290, 10158, 14548, 369, 264, 7424, 18132, 13, 576, 46769, 304, 419, 18132, 525, 2805, 323, 656, 12985, 11, 323, 1817, 825, 374, 8110, 553, 264, 3175, 3405, 911, 1181, 8794, 13, 64414, 525, 4588, 311, 17188, 1172, 389, 279, 12239, 2661, 304, 279, 21085, 5086, 11, 323, 311, 2506, 1449, 9851, 438, 9814, 438, 3204, 11, 1667, 825, 3409, 15356, 429, 374, 3322, 382, 14582, 25, 3555, 3283, 374, 847, 2114, 304, 5267, 40, 1079, 52448, 624, 5050, 2114, 374, 304, 60249, 624, 16141, 25, 151645, 198, 151644, 77091, 198]
+  edit_pos: 113
+  final_pos: 121
+  edit_token_decoded_base: ' Brisbane'
+  edit_token_decoded_cf: ' Valencia'
+  final_token_decoded: '\n'
+  answer_token_id_old: 46235
+  answer_token_id_new: 60249
+  answer_token_id_distractor: 52448
+  caption: 'PREDICTED_OUTPUT_CHANGE: Brisbane -> Valencia'
+  caption_sha256: '94b9b8d32be708b3006aaa9baac9f4e47779071fd8a58942b1898200005b4049'
+  plumbing_only: False
+  crossed_with: ''
+  reverse_of: 'b07fa46a515b458d'
+  behavioral_screen: None
+  oracle_patch_metrics: None
+  delta_norms: None
