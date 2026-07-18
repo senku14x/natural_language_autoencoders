@@ -32,9 +32,9 @@ Papers (read before designing experiments that depend on them):
 
 | Source | Link | Role |
 |---|---|---|
-| NLA paper | https://transformer-circuits.pub/2026/nla/ | Verbalizer/reconstructor architecture, activation injection, RL training pattern we reuse. Read fully. |
+| NLA paper | https://transformer-circuits.pub/2026/nla/ | Verbalizer/reconstructor architecture, activation injection, RL training pattern we reuse. |
 | Workspace paper | https://transformer-circuits.pub/2026/workspace/ | Main text for the Jacobian lens (J-lens) and the workspace concept. |
-| Workspace appendix: "Extending the Jacobian lens to multi-token concepts" | (appendix of the workspace paper above) | **Primary spec for this build** — template lens → oracle lens, four training stages. Read very carefully. |
+| Workspace appendix: "Extending the Jacobian lens to multi-token concepts" | (appendix of the workspace paper above) | Template lens → oracle lens, four training stages. Per-paper priorities are set by `research/PLAN.md`. |
 | Activation Oracles | https://arxiv.org/abs/2512.15674 · https://alignment.anthropic.com/2025/activation-oracles/ | Karvonen et al. 2025 — LatentQA-style general-purpose activation explainers; the AO baseline family. |
 | Building Better Activation Oracles | https://arxiv.org/abs/2606.02609 | Bauer et al. 2026 — on-policy AO training, improved injection formula, multi-layer feeds, and AObench (eval suite). |
 | Current Activation Oracles Are Hard To Use | https://www.lesswrong.com/posts/LXQBcztrWKhtcgQfJ/current-activation-oracles-are-hard-to-use | Practitioner-side failure modes of current AOs; motivates the usability bar. |
@@ -53,8 +53,8 @@ https://www.anthropic.com/research/natural-language-autoencoders
 
 ## Working conventions
 
-- **Branch**: all work goes on `claude/mech-interp-research-a5hkvv`. Never
-  push to any other branch without the user's explicit permission.
+- **Branch**: all work goes on `counterfactual_nla`. Never push to any other
+  branch without the user's explicit permission.
 - **Commits**: author/committer `senku14x <visheshgupta14x@gmail.com>`, with a
   `Co-Authored-By` trailer naming the Claude model that did the work.
 - **Artifacts**: every research report or result analysis gets a dated entry
