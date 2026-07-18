@@ -1,0 +1,46 @@
+# 20-family smoke run (spec §8) — manifest must be hand-readable.
+# Same structure as v1.yaml, tiny quotas.
+
+seed: 20260718
+
+tokenizer:
+  model_id: Qwen/Qwen2.5-7B-Instruct
+  revision: FILL_ME
+
+preamble:
+  min_final_pos: 52
+
+holdout:
+  colors: 4
+  color_transitions: 12
+  nonces: 5
+  names: 10
+  name_transitions: 15
+
+strata:
+  S:
+    templates: [s1, s2, s3]
+    context_templates: [s4]
+    families:
+      train: 6
+      dev: 2
+      test_context: 1
+      test_transition: 1
+      test_value: 1
+      test_entity: 1
+  N:
+    templates: [n1, n2, n3]
+    context_templates: [n4]
+    families:
+      train: 4
+      dev: 1
+      test_context: 1
+      test_transition: 1
+      test_name: 1
+
+cells:
+  null_aa_semantic:
+    S: 2
+    N: 1
+
+out_dir: research/data/out/smoke
