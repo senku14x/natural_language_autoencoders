@@ -39,7 +39,12 @@ def write_parquet(records: list[dict], path: Path) -> None:
 
 
 def config_hash(config: dict) -> str:
-    canon = json.dumps(config, sort_keys=True, separators=(",", ":"))
+    """Hash of the dataset-defining config. tokenizer.local_path is excluded —
+    it is an access mechanism, not a dataset parameter, and must not make the
+    same dataset hash differently across machines."""
+    cfg = json.loads(json.dumps(config))  # deep copy
+    cfg.get("tokenizer", {}).pop("local_path", None)
+    canon = json.dumps(cfg, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canon.encode()).hexdigest()
 
 

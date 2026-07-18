@@ -1,15 +1,16 @@
 # Counterfactual Difference NLA v1 — full dataset config.
 # Reproducible from this file + seed. tokenizer.revision MUST be an explicit
 # commit SHA (the pipeline refuses to run with a placeholder).
-#
-# BLOCKED: revision is FILL_ME because huggingface.co is denied by this
-# session's egress policy — fill in after fetching (see research/data/README.md).
 
 seed: 20260718
 
 tokenizer:
   model_id: Qwen/Qwen2.5-7B-Instruct
-  revision: FILL_ME
+  revision: a09a35458c702b33eeacc393d103063234e8bc28
+  # local_path: offline access mechanism (hub egress blocked in this
+  # container). Excluded from config_hash; file sha256s recorded in manifest.
+  # On a hub-connected machine, delete this line to fetch at the pinned SHA.
+  local_path: research/data/tokenizer/qwen25
 
 preamble:
   min_final_pos: 52   # read site must clear the released AV's _MIN_POSITION=50

@@ -34,12 +34,32 @@ def load_config(path: str) -> dict:
 
 def load_tokenizer(cfg: dict):
     from transformers import AutoTokenizer
-    model_id = cfg["tokenizer"]["model_id"]
-    revision = cfg["tokenizer"]["revision"]
+    tcfg = cfg["tokenizer"]
+    revision = tcfg["revision"]
     if not revision or revision == "FILL_ME":
         raise SystemExit("config tokenizer.revision must be an explicit commit SHA")
-    tok = AutoTokenizer.from_pretrained(model_id, revision=revision)
+    local = tcfg.get("local_path")
+    if local:
+        # offline path: files fetched at the pinned revision on another machine
+        # and placed here; provenance = revision (claimed) + file sha256s
+        # recorded in the manifest for later hub verification.
+        tok = AutoTokenizer.from_pretrained(local, local_files_only=True)
+    else:
+        tok = AutoTokenizer.from_pretrained(tcfg["model_id"], revision=revision)
     return tok, revision
+
+
+def tokenizer_file_hashes(cfg: dict) -> dict:
+    """sha256 of local tokenizer files (empty when loading from the hub)."""
+    import hashlib
+    local = cfg["tokenizer"].get("local_path")
+    if not local:
+        return {}
+    out = {}
+    for p in sorted(Path(local).glob("*")):
+        if p.is_file():
+            out[p.name] = hashlib.sha256(p.read_bytes()).hexdigest()
+    return out
 
 
 def chat_wrap_parts(tok) -> tuple[str, str]:
@@ -346,6 +366,7 @@ def run(config_path: str, out_dir: str | None = None, print_records: int = 5) ->
     preamble_rows_fp = [r.final_pos for r in kept if r.preamble]
     extra = {
         "audit_summary": audit_summary,
+        "tokenizer_local_file_sha256": tokenizer_file_hashes(cfg),
         "preamble": {
             "text": PREAMBLE_TEXT,
             "raw_token_count": len(tok.encode(PREAMBLE_TEXT, add_special_tokens=False)),
