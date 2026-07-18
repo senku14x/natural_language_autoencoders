@@ -17,14 +17,44 @@ Before doing any research work in a session, read in order:
    ladder, mandatory baselines) and 5 (project implications: gating order,
    boring alternatives, continue/pivot/stop rules) are binding on experiment
    design, not just background.
-2. `research/docs/AO_NLA_JSPACE_METHODS_LEARNINGS.md` — companion extended
+2. `research/docs/COUNTERFACTUAL_DIFFERENCE_NLA_V1_DECISION.md` — **the active
+   research plan.** Finalized v1 scope: counterfactual difference verbalization
+   on a controlled binding task (Qwen2.5-7B-Instruct, layer 20, final
+   position), claim ladder L0–L6, execution stages A–D, minimum controls, and
+   provisional pass/fail gates. Work follows this document.
+3. `research/docs/COUNTERFACTUAL_DIFFERENCE_NLA_EXTENSION_BACKLOG.md` — gated
+   extension menu (availability/propagation, distributional changes, derived
+   relations, abstention, magnitude). §1 scope rule: extensions are triggered
+   by evidence, never opened preemptively. §2 lists refinements that belong in
+   v1 now.
+4. `research/docs/PARAMETRIC_PRIOR_ENTITY_SWAP_EXTENSION.md` — later
+   public-entity branch (parametric-prior entity swaps, crossed
+   name × contextual-profile design, identity-to-lookup baseline). Not part of
+   v1; common-name identity binding is in v1 itself.
+5. `research/docs/AO_NLA_JSPACE_METHODS_LEARNINGS.md` — companion extended
    methods review referenced by the context doc. **Not yet provided** — if a
    task depends on it, ask for it rather than guessing its contents.
-3. `research/PLAN.md` — the active research plan. **Not yet written**; it will
-   be added when the user shares it. Until then, do not commit to a specific
-   experimental direction beyond what the context doc establishes.
-4. `research/ARTIFACTS.md` — running log of reports and result analyses; check
+6. `research/ARTIFACTS.md` — running log of reports and result analyses; check
    it to see what has already been run and found.
+
+## Repo facts that constrain the plan (verified in code, 2026-07-18)
+
+- Released Qwen NLA: `kitft/nla-qwen2.5-7b-L20-av` / `-ar` on HF
+  (`kitft/nla-models` collection), target Qwen2.5-7B-Instruct, layer 20/28,
+  `d_model` 3584. Sidecar `nla_meta.yaml` ships prompt template, injection
+  token (`㈎` U+320E, id 149705, inside `<concept>…</concept>`), and scales —
+  load from sidecar, never hardcode (root `CLAUDE.md` invariant).
+- **AV input normalizes**: `injection_scale: 150.0` = the L2 norm every
+  injected vector is rescaled to (`nla/config.py`). Delta magnitude is
+  destroyed at the AV interface; `NO_CHANGE` must be readable from direction
+  alone; near-zero deltas need an epsilon guard before rescale.
+- **AR / loss are direction-only**: `mse_scale` normalizes both prediction and
+  gold before MSE (= `2(1 − cos)`).
+- Released AV/AR trained on fineweb-style *document* activations at token
+  positions ≥ 50 (`_MIN_POSITION` in `nla/datagen/stage0_extract.py`), no chat
+  template. Short task prompts are OOD in both position and style — the
+  ordinary-activation parity check (Stage B.1) is load-bearing before any
+  delta result is interpreted.
 
 ## Required reading (external sources)
 
