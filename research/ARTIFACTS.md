@@ -27,6 +27,31 @@ that save the most compute later.
 
 ---
 
+## 2026-07-18 — Amendment 1 applied: four caption columns added to frozen v1
+
+- Phase: execution
+- Question: implement `CAPTION_SCHEMA_AMENDMENT_1.md` §8 — emit
+  `{arrow, sentence} × {transition, entity}` renders without regenerating
+  pairs.
+- Setup: renderer `amendment1-r1` (`ctf_data/rich_captions.py`); same config,
+  seed, tokenizer as the v1 generation entry below.
+- Observations: regeneration reproduced all 58,320 pairs bit-identically
+  (pair_id, legacy caption, base_input_ids verified against the frozen
+  parquet); 8 new columns added (4 captions + 4 sha256); round-trip +
+  cross-format canonical equality verified per semantic pair at generation
+  time; 64/64 tests pass.
+- Interpretation: none — infrastructure.
+- Flags: (1) implemented the amendment's §2.1 distractor forms verbatim,
+  including the queried-entity naming clause, despite the tension with its
+  own §3 (clause = "measurement, not caption field, until tested") — see
+  README; (2) the §3 "prior tuple-mean result" needs its measurement site
+  pinned (edit-site vs final-position) before it can inform the
+  unaffected-clause decision.
+- Artifacts: `research/data/artifacts/v1/` refreshed (parquet 3.4 MB,
+  manifest with renderer version + verification status).
+- Next: unchanged — GPU Stage A/B; content decision resolves per amendment §4
+  after the mean hierarchy runs.
+
 ## 2026-07-18 — v1 prompt-pair dataset generated (tokenizer-only stage)
 
 - Phase: execution

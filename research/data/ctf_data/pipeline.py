@@ -351,6 +351,14 @@ def run(config_path: str, out_dir: str | None = None, print_records: int = 5) ->
     if ds_problems:
         raise SystemExit(f"dataset invariants failed: {ds_problems[:10]}")
 
+    # Amendment 1: per-row round-trip + cross-format canonicalization checks
+    from . import rich_captions
+    caption_problems = []
+    for sem in {r.semantic.semantic_id: r.semantic for r in kept}.values():
+        caption_problems.extend(rich_captions.verify_row(sem))
+    if caption_problems:
+        raise SystemExit(f"caption renderer checks failed: {caption_problems[:10]}")
+
     # ---- 6. write ----
     rej_summary = rej.summary()
     rej_summary["rates"] = {
@@ -388,6 +396,12 @@ def run(config_path: str, out_dir: str | None = None, print_records: int = 5) ->
         "chat_template": {"prefix": chat_prefix, "suffix": chat_suffix},
         "caption_labels_emitted": ["transition", "NO_CHANGE"],
         "caption_labels_parser_valid_but_unused": ["NOT_IDENTIFIABLE_FROM_THIS_STATE"],
+        "caption_renderers": {
+            "version": rich_captions.RENDERER_VERSION,
+            "columns": list(rich_captions.CAPTION_COLUMNS),
+            "round_trip_and_cross_canonical": "verified for every semantic pair",
+            "legacy_caption_column": "unchanged pre-amendment single-field render",
+        },
         "variant_axes": {"query_order": ["query_last", "query_first"],
                          "prompt_format": ["raw", "chat"],
                          "preamble": [False, True]},

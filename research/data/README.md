@@ -102,6 +102,28 @@ out/             generated artifacts (gitignored): pairs.parquet,
     with Arrow's offsets buffers; layout documented in the manifest), matching
     the repo's pyarrow convention rather than a bespoke flat-binary format.
 
+## Amendment 1 caption columns (2026-07-18)
+
+Per `research/docs/CAPTION_SCHEMA_AMENDMENT_1.md`, every row carries four
+deterministic caption renders — `{arrow, sentence} × {transition, entity}` —
+as `caption_arrow_transition`, `caption_sentence_transition`,
+`caption_arrow_entity`, `caption_sentence_entity` (each with a `_sha256`
+twin). Renderer version `amendment1-r1` (`ctf_data/rich_captions.py`);
+round-trip and cross-format canonical equality are verified for every
+semantic pair at generation time. The legacy `caption` column is the
+unchanged pre-amendment single-field render. Content/format selection is a
+training-time column choice; the entity-content decision is gated on Stage B.
+
+**Flagged tension (unresolved, implemented per the amendment's §2.1
+examples):** the distractor entity-content forms name the queried entity
+("`| queried: jeck unaffected`"), but the amendment's own §3 marks the
+unaffected-entity clause "treat as a measurement, not a caption field,
+until tested" — the queried-entity name may not be recoverable from the
+delta if shared-context contributions cancel. The behavioral part of the
+clause ("unaffected") is required (it carries the NO_CHANGE claim that §6
+gates on); the *naming* part is the questionable slot. If the naming clause
+is cut, `rich_captions.py` changes two lines and regeneration takes ~30 s.
+
 ## Schema notes
 
 `value_old`/`value_new` always describe THE EDIT (what changed in the

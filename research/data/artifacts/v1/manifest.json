@@ -1,10 +1,10 @@
 {
   "dataset": "counterfactual_difference_nla_v1",
-  "generated_at": "2026-07-18T16:38:59.362951+00:00",
+  "generated_at": "2026-07-18T17:32:06.766292+00:00",
   "model_id": "Qwen/Qwen2.5-7B-Instruct",
   "tokenizer_revision_sha": "a09a35458c702b33eeacc393d103063234e8bc28",
   "intended_model_revision_sha": "a09a35458c702b33eeacc393d103063234e8bc28",
-  "code_commit": "2eed5aded30d713af045fd39d8e5548bf6b2c025",
+  "code_commit": "e04fea3ffc7d4496dc0c8710bb4db4b8429eba6a",
   "config_hash": "0d85e5a602c4a4aafbf1ac77550d93d7c63d15922071cdcfb71b646ab207c457",
   "seed": 20260718,
   "counts": {
@@ -3150,6 +3150,17 @@
   "caption_labels_parser_valid_but_unused": [
     "NOT_IDENTIFIABLE_FROM_THIS_STATE"
   ],
+  "caption_renderers": {
+    "version": "amendment1-r1",
+    "columns": [
+      "caption_arrow_transition",
+      "caption_sentence_transition",
+      "caption_arrow_entity",
+      "caption_sentence_entity"
+    ],
+    "round_trip_and_cross_canonical": "verified for every semantic pair",
+    "legacy_caption_column": "unchanged pre-amendment single-field render"
+  },
   "variant_axes": {
     "query_order": [
       "query_last",

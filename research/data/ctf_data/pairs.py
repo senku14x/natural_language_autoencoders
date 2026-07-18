@@ -30,6 +30,7 @@ import hashlib
 from dataclasses import dataclass, field, asdict
 
 from . import captions as cap
+from . import rich_captions
 from .templates import ALL_TEMPLATES
 
 QUERY_ORDERS = ("query_last", "query_first")
@@ -207,6 +208,9 @@ class VariantRow:
             "answer_token_id_distractor": answer_ids[s.value_distractor],
             "caption": caption,
             "caption_sha256": cap.sha256(caption),
+            # Amendment 1 columns: {arrow,sentence} x {transition,entity},
+            # each with its own sha256. Legacy `caption` column unchanged.
+            **rich_captions.render_all(s),
             "plumbing_only": s.plumbing_only,
             "crossed_with": s.crossed_with,
             "reverse_of": s.reverse_of,

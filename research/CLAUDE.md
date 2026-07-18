@@ -21,7 +21,12 @@ Before doing any research work in a session, read in order:
    research plan.** Finalized v1 scope: counterfactual difference verbalization
    on a controlled binding task (Qwen2.5-7B-Instruct, layer 20, final
    position), claim ladder L0–L6, execution stages A–D, minimum controls, and
-   provisional pass/fail gates. Work follows this document.
+   provisional pass/fail gates. Work follows this document, as amended by:
+   `research/docs/CAPTION_SCHEMA_AMENDMENT_1.md` — supersedes the caption
+   schema (§3), verbalization gates (§9), and Level-4 wording: two caption
+   axes (format: arrow/sentence × content: transition/entity), content gated
+   on Stage B mean-hierarchy results, format tested as a 2×2 with
+   initialization, registered predictions in its §9.
 3. `research/docs/COUNTERFACTUAL_DIFFERENCE_NLA_EXTENSION_BACKLOG.md` — gated
    extension menu (availability/propagation, distributional changes, derived
    relations, abstention, magnitude). §1 scope rule: extensions are triggered
