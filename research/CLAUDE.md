@@ -99,7 +99,8 @@ https://www.anthropic.com/research/natural-language-autoencoders
 
 ## Working conventions
 
-- **Branch**: all work goes on `counterfactual_nla`. Never push to any other
+- **Branch**: all work goes on `counterfactual_nla_v2` (history-clean port of
+  the retired `counterfactual_nla`, 2026-07-19). Never push to any other
   branch without the user's explicit permission.
 - **Commits**: author/committer `senku14x <visheshgupta14x@gmail.com>`, with a
   `Co-Authored-By` trailer naming the Claude model that did the work.
