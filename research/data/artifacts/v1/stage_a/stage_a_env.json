@@ -1,0 +1,24 @@
+{
+  "date": "2026-07-19",
+  "gpu": "NVIDIA H100 80GB HBM3 (sm_90), driver 580.105.08",
+  "python": "3.12.3",
+  "torch": "2.7.0",
+  "transformers": "5.14.1",
+  "numpy": "1.26.4",
+  "pandas": "2.1.4",
+  "pyarrow": "25.0.0",
+  "model": "Qwen/Qwen2.5-7B-Instruct @ a09a35458c702b33eeacc393d103063234e8bc28 (bf16, sdpa)",
+  "seed": 20260719,
+  "canonical_forward_shape": [
+    64,
+    131
+  ],
+  "scripts": [
+    "run_level0.py",
+    "run_screen.py",
+    "run_patch_matrix.py",
+    "run_site_decomposition.py",
+    "run_distractor_edit_site.py",
+    "make_plots.py"
+  ]
+}

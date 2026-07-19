@@ -1,0 +1,38 @@
+{
+  "model_path": "/home/ubuntu/counterfactualnlas/hf_home/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28",
+  "layer": 20,
+  "seed": 20260719,
+  "l0_1": {
+    "raw_reencode_checked": 500,
+    "raw_reencode_fail": 0,
+    "final_pos_not_last": 0
+  },
+  "l0_2": {
+    "hook_vs_hidden_states21_max_abs_diff": 0.0
+  },
+  "l0_3": {
+    "zero_patch_max_abs_logit_diff": 0.0
+  },
+  "l0_4": {
+    "batched_vs_single_max_abs_logit_diff": 0.875,
+    "batched_vs_single_h20_reldiff_max": 0.026603326201438904,
+    "note": "bf16 + padded batching is not expected to be bitwise; bounded below by noise floor"
+  },
+  "l0_6": {
+    "canonical_shape": [
+      64,
+      131
+    ],
+    "repeat_max_diff": 0.0,
+    "recomposition_max_logit_diff": 0.0,
+    "null_aa_delta_norm_max_canonical": 0.0
+  },
+  "l0_5": {
+    "same_shape_recomposition_delta_norm_max": 0.0,
+    "null_aa_identical_prompt_delta_norm_max": 0.0,
+    "cross_shape_delta_norm_max_observed": 2.647773265838623,
+    "typical_h20_final_norm_median": 101.42544555664062,
+    "epsilon_guard_provisional": 3.97,
+    "rule": "treat ||delta|| < epsilon as exact zero before any AV-side rescale; within the canonical-shape policy true-null deltas are exactly 0"
+  }
+}

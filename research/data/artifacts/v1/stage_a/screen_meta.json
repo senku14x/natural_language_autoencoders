@@ -1,0 +1,25 @@
+{
+  "model_path": "/home/ubuntu/counterfactualnlas/hf_home/hub/models--Qwen--Qwen2.5-7B-Instruct/snapshots/a09a35458c702b33eeacc393d103063234e8bc28",
+  "seed": 20260719,
+  "canonical_shape": [
+    64,
+    131
+  ],
+  "chat_canonical_form_by_stratum": {
+    "N": "bare_cap",
+    "S": "bare"
+  },
+  "chat_form_counts_by_stratum": {
+    "N": {
+      "bare_cap": 222
+    },
+    "S": {
+      "bare": 197,
+      "bare_cap": 171,
+      "leading_space": 6
+    }
+  },
+  "n_rows": 5040,
+  "eligible_change_rows": 1016,
+  "eligible_distractor_rows": 640
+}

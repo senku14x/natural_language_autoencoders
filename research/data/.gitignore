@@ -3,3 +3,7 @@ tokenizer/
 __pycache__/
 .pytest_cache/
 *.pyc
+
+# Stage A activation/logit caches — large and regenerable from research/stage_a/*.py.
+# fp16 logit caches ~1.5 GB each; L20 state arrays ~69 MB each.
+artifacts/v1/stage_a/*.npy

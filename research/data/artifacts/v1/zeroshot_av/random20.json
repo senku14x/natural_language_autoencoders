@@ -1,0 +1,142 @@
+[
+ {
+  "i": 37,
+  "arm": "shuffled",
+  "pair": "mustard->white",
+  "sample": 2,
+  "explanation": "Structured textbook format with bold definitions and formatting, presenting a compound term \"Chemistry\" in a financial context (chemistry of finance).\n\nThe sentence pattern \"If you choose to invest in physics, your income increases. Then the formula: Money+Time=wealth. \" mirrors an incomplete second clause, suggesting the familiar formula or answers about spending activities or cash flow from the new knowledge.\n\nFinal token \"Select\" is mid-quote (\"Forced one gold\"), part of a second \"If... then\" clause structure (\"This change means...\"), expecting continuation like \"field\" or \"a\" or \"the equation of money\" or \"week's output\" or another clause completing the question."
+ },
+ {
+  "i": 114,
+  "arm": "transition_mean",
+  "pair": "beige->yellow",
+  "sample": 4,
+  "explanation": "Structured math textbook format with formal prose style, presenting a formula with variable names \"John, Paul\" in a sequential narrative about a student's actions.\n\nThe phrase \"If the student's knowledge increases, he is forced to choose other answers\" mirrors a classic pattern (\"Since X, Y's actions\"), strongly implying the conclusion clause continues with \"his own answer: the Sun's victory.\"\n\nFinal token \"yellowing\u9ec4\u9ec4\u4ee5\u4e0b\u7684\u3002\" is mid-sentence \"The person who is not yellowing, I want...\"), immediately requiring \"the answer\" or \" [completes the opposition]\" or \"His score, he must...\" or \"the other questions are.\""
+ },
+ {
+  "i": 142,
+  "arm": "transition_mean",
+  "pair": "Tehran->Denver",
+  "sample": 2,
+  "explanation": "Structured reference format with mathematical definition, numbered bullets describing a weather term, following a textbook or encyclopedia pattern.\n\nThe pattern \"The formula: When x changes, y equals something... A moving object's height is constant except for the next version\" mirrors the classic sequence of a typical weather forecast series, with the second bullet clearly completing the \"Traveling by the third dimension\" rule about the third dimension.\n\nFinal token \"unknown's  nom 423.\" is mid-sentence (\"The figure's traveling...large number of times... 423.3\"), immediately expecting \"the second\" or \"a. a.\" or \"the number of\" an in-flight condition."
+ },
+ {
+  "i": 256,
+  "arm": "real",
+  "pair": "Vienna->Naples",
+  "sample": 1,
+  "explanation": "Structured reference format with a Wikipedia-style article pattern (\"Math symbol\") listing mathematical terms with definitions and meanings, following a sequence of concepts from calculus/sustainability.\n\nThe phrase \"In calculus, the term 'normal' usually indicates a probability distribution or probability model, with the highest frequency...\" mirrors the pattern of listing categories from the MathWorks formula, suggesting the answer continues naming \"Greek\" or similar.\n\nFinal token \"Naped\" is mid-phrase in \"N\ufffdlaces,\" repeats the answer pattern \"Naped\" completing \"Other answers include...Naples,\" strongly expecting \"Second Quarter\" or \"the negative,\" or \"Math 2...\" continuing the statistical context about outcomes."
+ },
+ {
+  "i": 432,
+  "arm": "real",
+  "pair": "plum->lime",
+  "sample": 2,
+  "explanation": "Structured Wikipedia-style UI text with bold header format and definition pattern, describing a fictional character's \"about\" attributes as a game's character.\n\nThe phrase \"The popular interpretation of the acronym, meaning its index of life's status, is commonly seen as 'LGM', and here is the answer:\" mirrors the familiar \"Google's mathematical index,\" with a classic sequence implying the answer follows.\n\nFinal token \"time, \" closes \"about, is 2. 'LGM', around\" \u2014 part of an incomplete parenthetical list (\"Its value: usually l...\"), strongly expecting \"index of\" or \"the mathematical\" or \"some other version of games\" or \"world.\""
+ },
+ {
+  "i": 511,
+  "arm": "real",
+  "pair": "crimson->yellow",
+  "sample": 1,
+  "explanation": "Structured dictionary format with formatted entries following a pattern of \"Anxiety\" definition followed by \"Glossary\" section listing the word's characteristics.\n\nThe sentence \"To express: The word 'Knowledge' is negative, then the next phrase to 'the phrase 'the' is a type of thinking\" mirrors the pattern of a third item in a multiple-choice format, implying the next tokens continue the SAT-notation.\n\nFinal token \"yellow\" is mid-sentence (\"2. Y = 2. The idea of Y...and then\"), strongly expecting \"oof\" or \"o. Physical\" or \"man, I\" continuing the \"Foil/visualization\" definition sequence."
+ },
+ {
+  "i": 524,
+  "arm": "random",
+  "pair": "crimson->yellow",
+  "sample": 4,
+  "explanation": "Structured math reference format with educational definition pattern, showing a dated calculator entry with formulas and terms about statistics.\n\nThe phrase \"The SAT score increases by 10%, and a list of 108 different food terms\" is a standard math dictionary template entry following a famous real-world event, with \"MATHS TERMS\" being the well-known answer format for a \"Food Dictionary.\"\n\nFinal token \"Terms.) Is\" ends mid-sentence (\"Books and 60, July 15, 2006. So, six Terms. M.J.R are...\"), strongly expecting \"A\" or \"Isolate the\" or \"A list of related concepts.\""
+ },
+ {
+  "i": 532,
+  "arm": "h_base",
+  "pair": "crimson->yellow",
+  "sample": 2,
+  "explanation": "Formal British English word puzzle format with a constructed noun phrase (\"The colour of these becomes sapphire...\"), implying a pattern of paired adjective descriptions.\n\nThe given phrase \"If x was silver it was beige, whereas y was vermillion\" suggests a second parallel adjective describing a color, strongly implying \"crimson\" or a similar noun completing the color comparison about a fruit or thing.\n\nFinal token \"crimson\" ends mid-compound noun (\"and crimson\"), part of a parenthetical example listed alongside \"becomes sapphire...,\" strongly expecting \".\" or \" \" or \"and\" or \"a colour,\" completing the contrasting adjective pair about the given object's hue."
+ },
+ {
+  "i": 670,
+  "arm": "h_cf",
+  "pair": "Eric->Oliver",
+  "sample": 0,
+  "explanation": "British literary fiction or informal prose style with a mysterious narrative beginning (\"This is a novel about a man called Mr.\" suggests a character name or personal identity).\n\nThe phrase \"My name is Oliver\" strongly implies an introductory clause or personal name declaration, likely continuing a character's identity or narrative context, possibly referencing a novel, detective, or mystery writer's identity.\n\nFinal token \"Oliver\" is a proper name mid-clause (\"My name is Oliver\"), part of a phrase or question structure (\"I am called Oliver\"), strongly expecting continuation like \"Watson\" or \"Johnson\" or \"and I am a\" or \"Brown,\" or \"a person who loves mystery.\""
+ },
+ {
+  "i": 917,
+  "arm": "real",
+  "pair": "Diego->Sam",
+  "sample": 2,
+  "explanation": "Biblical text format with quoted lines from John's literary context, following modern literature conventions with a common formula about \"The Heart is Not in This Place.\"\n\nThe quoted phrase \"If a man comes, then the thing called 'the house' that is 'not at all' is the same pattern as 'Sam's'\" mirrors a standard quote pattern, implying the usual \"Oz is not a dream.\"\n\nFinal token \"Sam\" is mid-quote within \"the things that 'sam'... a book...that is,\" strongly expecting \"s\" or \"the other\" or \"the Other Line\" or \"   \" confirming the familiar quoted formula about the house's state."
+ },
+ {
+  "i": 925,
+  "arm": "random",
+  "pair": "Diego->Sam",
+  "sample": 0,
+  "explanation": "Wiki-style geometric product description with formatted text, following a standard UI element template from a Romanian language Wikipedia page with \"Logo\" entry.\n\nThe pattern \"The flag is a common shape. Find the speed of the vehicle. \" is a standard Wikipedia template, with the familiar \"Comparison to other objects\" structure signaling a paired name search pair (\"solved by...\").\n\nFinal token \"dings\" ends an incomplete repeated \"Simplified. ... , but\" clause, part of a standard encyclopedia format's \"Similar to\" field with a second noun (\"Find the name of the person. , then\"), strongly expecting \"the other\" or \"And movement\" or \"employee's name.\""
+ },
+ {
+  "i": 945,
+  "arm": "real",
+  "pair": "Nina->Alan",
+  "sample": 0,
+  "explanation": "Wiki structure with formal reference format (\"Wikipedia page\") describing a mathematical constant, following a sequence of defining properties and historical context.\n\nThe sentence pattern \"The third fundamental equation of mathematics, a mysterious phenomenon...is an intermediate step\" mirrors the classic definition of a scientific or geometric structure, strongly implying the next tokens continue describing the famous \"hidden\" formula's components or process like \"a\".\n\nFinal token \"array\" mid-word in \"The following array\" begins a well-known list item (\"a complex number three\"), mid-sentence clause with \"The following array... 1) \" expects \"a. a\" or \"the third\" or \"hidden formula,\" completing a definition."
+ },
+ {
+  "i": 1016,
+  "arm": "random",
+  "pair": "Detroit->Montreal",
+  "sample": 1,
+  "explanation": "Structured football statistic format with official Wikipedia template pattern following \"Chapter 1: Team Strategy,\" showing numbered sections with sub-items from Article 2.\n\nThe phrase \"However, if Team A's first paragraph was: The first 15 minutes...\" follows a standard Sports League rules template formula (\"But the members had already...\" / \"90 \u00d7\"), strongly implying the \"But\" clause's clause completion.\n\nFinal token \"haslylyrl\" is mid-phrase in \"But they had already received 50 \u00d7,\" part of a \"If Manchester United plus\" clause, immediately expecting \" . \" or \"a year later\" or \"The following section\" completing the clause."
+ },
+ {
+  "i": 1042,
+  "arm": "shuffled",
+  "pair": "purple->cyan",
+  "sample": 2,
+  "explanation": "Structured math definition format with LaTeX syntax, following a pattern of listing attributes (\"A+ B+ C+ \u2192\") and a common phrase about a set being defined.\n\nThe phrase \"Since: it is red in the sea, the ocean is red: the coral is red\" mirrors the classic definition format, strongly implying the answer \"is the answer\" pattern about the second part's attribute being \"dying.\"\n\nFinal token \"corruptional\" closes the second part of a parallel phrase (\"If...about the coral and...M is a coral or red; being alive...\"), immediately expecting \" of the \" or \"...it is a\" completing the definition's conclusion about the coral's nature."
+ },
+ {
+  "i": 1139,
+  "arm": "random",
+  "pair": "Marcus->Luke",
+  "sample": 4,
+  "explanation": "Formal product description format with numbered specifications and chemical product details from a pharmaceutical reference source, following a structured academic or retail catalog pattern.\n\nThe phrase \"My name is S.D. Rajiv, an Indian veterinarian, and I write the following product description. This wine has been operating in India since 1895, and I declare...\" concludes a standard attribution line, commonly followed by a section header about ethics or.\n\nFinal token \"Management\" ends \"Time of entry, and Within the boundaries of the region, Production, Maintain, and\" \u2014 a common phrase pattern in chemical product descriptions signals the closing section \"Productivity, with the country's\" clause."
+ },
+ {
+  "i": 1197,
+  "arm": "random",
+  "pair": "Eugene->Paul",
+  "sample": 2,
+  "explanation": "Structured technical documentation format with a \"Excel formula result\" answer, followed by a standardized format pattern using CAS (Comcast Aviation) notation conventions.\n\nThe phrase \"The `STOP` command in Excel: 'Time' range\" mirrors a common forum answer convention with \"Zeroing\" shorthand, implying the final clause completes a \"flight sequence\" or \"limited repetitions\" clause (common to SAE).\n\nFinal token \"NO\" is mid-quote of a parenthetical abbreviation \"MATHLAB 'END', 'STOP'... (\" \u2014 immediately expects \"the following items,\" \"a faster run,\" or \"a complete cycle)\" \u2014 a standard Excel error explanation phrase."
+ },
+ {
+  "i": 1219,
+  "arm": "real",
+  "pair": "ruby->crimson",
+  "sample": 4,
+  "explanation": "Formal literary format with numbered/listed constructions (\"The word \"Happy\" means...\"), suggesting a book title or text puzzle context with definitions.\n\nThe phrase \"If a color is brightened, it becomes Darker. And If its hues are crimson,\" establishes a parallel structure listing descriptive adjectives defining a scene, strongly implying the second given option \"In crimson, the answer is.\"\n\nFinal token \"climformed\" ends mid-definition (\"In an indistinct, it's Inclined to be: \"In a crimson,\"), immediately requiring the complementary opposite descriptor like \"shade\" or \"the third\" or \"black\" or \"on the contrary\" to complete the clause."
+ },
+ {
+  "i": 1242,
+  "arm": "real",
+  "pair": "yellow->rust",
+  "sample": 2,
+  "explanation": "Structured technical format with code reference in English, presenting a formatted quoted title and image caption format suggesting an Excel or programming context about a motorized system.\n\nThe phrase \"The following code block: 'The rust in my machine' refers to a periodic system where the model accumulates and simulates an aging process, along with rust... \" implies a quoted technical term from a historical context or API.\n\nFinal token \"rust\" is mid-quote in an incomplete clause (\"The two rust\"), part of a quoted technical description listing a historical event (\"A rust...\"), strongly expecting \"accumulation\" or \"lapse\" or \"the decay\" or \"dissolution\" or similar corrosion term."
+ },
+ {
+  "i": 1307,
+  "arm": "shuffled",
+  "pair": "Kevin->Rachel",
+  "sample": 2,
+  "explanation": "Math format with structured calculator output pattern, listing numerical values for a day's temperature in a date format.\n\nThe phrase \"The first six numbers of the math problem involves numbers from a specific range. (Solve) \" suggests a typical list of math concepts from an Excel formula, implying the next token continues description of an ingredient or source item from \"Slate\" (a geological/series context).\n\nFinal token \"Slate\" is mid-phrase (\"One of\") within a compound noun phrase (\"From the calculated item from an incoming list of\"), strongly expecting \"Slate\" or \"the next dated item\" or \"a quadratic equation\" or \"unwanted\" negative influence."
+ },
+ {
+  "i": 1445,
+  "arm": "transition_mean",
+  "pair": "amber->peach",
+  "sample": 0,
+  "explanation": "Structured Wikipedia format with image caption and attributes, listing characteristics of a fruit (\"Strawberry\") with a formulaic pattern about a Japanese food product.\n\nThe phrase \"If you like this item as a food, it indicates the plant is satisfying, with its description\" suggests a concluding clause follows a second attribute or source claim about the user's profile, likely citing a related attribute about the image credit.\n\nFinal token \"practice\" ends an incomplete clause (\"Even 'Society' in which such a term is 8\" with \"Of course, 'Peach\"), strongly expecting \"its... \" or \"the product is\" or \"Myo\" or similar completion of a health/credit."
+ }
+]

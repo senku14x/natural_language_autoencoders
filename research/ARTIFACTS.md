@@ -27,6 +27,131 @@ that save the most compute later.
 
 ---
 
+## 2026-07-19 — Exploratory: zero-shot AV reads new-value TOKEN IDENTITY from edit-site deltas (74% vs 0% floor)
+
+- Phase: exploration. **Not Stage B, not a verbalizer result.** One cheap
+  question on the RELEASED AV, no fine-tuning. Predictions registered first
+  (`temporary_artifacts/2026-07-19_zeroshot_av_predictions.md`); report
+  `temporary_artifacts/2026-07-19_zeroshot_av_report.md`.
+- Question: does the released AV (`kitft/nla-qwen2.5-7b-L20-av`) mention the
+  new value when handed the edit-site L20 delta?
+- Setup: target Qwen2.5-7B @ `a09a3545…`, L20 = hidden_states[21]; AV sidecar
+  (㈎ 149705, injection_scale 150, embed_scale 1.0, all from nla_meta.yaml).
+  Read site = **edit-token position** (Stage A's h_*.npy were final-position;
+  re-extracted here). 50 random dev/raw+preamble/eligible change pairs (seed
+  20260719; S=26/N=24; query 46 last/4 first — a groupby.first() artifact).
+  6 arms × 5 samples @ T=1 = 1,450 generations. String-match scoring, no LLM
+  judge. Serving: repo pure injection funcs + transformers-native
+  generate(inputs_embeds=) (identical forward math to SGLang; Qwen needs no
+  patch). **Tokenization fix**: one-step apply_chat_template(tokenize=True)
+  lets NFKC rewrite ㈎→"(가)" and drops the injection token; used the
+  two-step render→encode path (per the user's Validating-NLAs infra doc).
+- Observations (dev, this setup; new-value mention rate, pair-bootstrap CI):
+  h_cf state **1.00** (positive control) · real Δ **0.74** [0.64,0.84] ·
+  E[Δ|old,new] mean 0.62 · h_base 0.02 (names OLD 1.00) · shuffled Δ **0.00**
+  · random **0.00**. Real names old 0.00. **Headline real−shuffled = +0.74**
+  [+0.64,+0.84]. Colors 0.89 ≫ names 0.58. Edited-entity mention ~0 in every
+  arm. Matches verified genuine in context ("The pink color", "Final token
+  yellow", "My name is Oliver"); ambiguous dual-meaning words only 39/185
+  hits (real still 58% excluding all of them). Shuffled names the DONOR
+  pair's value (other-value rate ≈1.0), confirming the mechanism.
+- Interpretation (separate): **token-identity readout at the edit position**
+  (the AV literally reports "Final token X"), i.e. the "names the changed
+  token" boring alternative made concrete — NOT consequence/transition
+  reading. Establishes the instrument IS sensitive here (contra final-position
+  pessimism and the oakhu noisiness prior) and that the edit-site delta
+  carries recoverable new-value token identity above a clean 0% floor. Does
+  NOT separate "names edited token" from "reads the answer transition"
+  (TARGET rows: edited==queried) and licenses nothing about captions/gates/
+  Stage B-C or anything causal. Surrounding prose is confabulated; only the
+  named token carries signal. **Prediction miss owned**: predicted real 0.15 /
+  h_cf 0.40 / headline +0.10 — over-applied the oakhu prior (measured for
+  subtle final-position diffs, not single-token naming at the token's own
+  position).
+- Plot: `plots/2026-07-19_zeroshot_av_mention_rates.png`. Data:
+  `data/artifacts/v1/zeroshot_av/` (all_explanations.json, scored.parquet,
+  arm_summary.parquet, headline.json, random20.json, h_edit_*.npy).
+- Qwen3-8B retrospective: **still not on this instance** (not in repo/home/
+  scratchpad/attachment) — could not import; §11.2 provenance unsatisfied
+  here. Not fabricated. Re-share to import (narrative, not citable as result).
+- Next: user review. This is decodability-of-a-token evidence only; the
+  substrate/site decisions and Stage B plan are unchanged by it.
+- Follow-up probe (same day): **value_old IS linearly recoverable from the
+  delta** — linear probe (PCA→logreg, GroupKFold by family), old~delta 0.96
+  (colors) / 0.76 (names) ≈ new~delta 0.96/0.76, both ≫ chance (0.029/0.009);
+  single states give only their own endpoint (neg ctrls at chance); label-perm
+  at chance. So the AV's 0% zero-shot old-mention is a decoding limit, not
+  information absence — the transition (both endpoints) is in the delta. Still
+  only decodability of two token identities on dev/shared-vocabulary;
+  reader-is-lookup and held-out-value caveats bind. Script
+  `research/exploratory/oldvalue_probe.py`; plot
+  `plots/2026-07-19_oldvalue_probe.png`; `zeroshot_av/oldvalue_probe.json`.
+
+## 2026-07-19 — Stage A: causal substrate FAILS at the final position, PASSES at the edit site (dev split)
+
+- Phase: validation (Experiment 1, v1 doc §7; Level 0–1 of the claim ladder)
+- Question: is the pre-registered layer-20 final-position delta causally
+  sufficient for the answer change (gate: median normalized margin recovery
+  ≥ 0.50, direction ≥ 80%, controls < 0.10)?
+- Setup: Qwen2.5-7B-Instruct @ `a09a3545…` (bf16, sdpa), L20 = block-20
+  output = hidden_states[21], dev split only (4,800 rows + 240 NULL_AA),
+  seed 20260719, transformers 5.14.1 (generation-env match), H100 80GB.
+  **Canonical-shape forward policy**: all measurement forwards at (B=64,
+  L=131, left-padded, explicit position_ids) — forward results are
+  deterministic given (input, batch shape) but differ across shapes by up to
+  ~0.6 logit / ~2.65 h20-norm units (≈15% of the median final-position delta
+  norm); under the fixed shape, repeats are bitwise identical and all 240
+  NULL_AA deltas are exactly zero. Scripts in `research/stage_a/`; artifacts
+  in `research/data/artifacts/v1/stage_a/`; report in
+  `temporary_artifacts/2026-07-19_stage_a_report.md`.
+- Observations (evidence class: supported empirical claims on dev under the
+  stated setup; per-cell family-bootstrap CIs in the report):
+  1. Level-0 all pass: frozen ids re-encode; hook ≡ hidden_states[21] (0.0);
+     zero patch exact identity; bit-identical dataset regeneration (66/66
+     tests, config_hash match); provisional ε = 3.97.
+  2. Behavioral screen: raw/pre 74.3% eligible (594/800, both strata),
+     raw/nopre 32.8% (S only), chat/pre 20.0%, **chat/nopre 0.0%** (model
+     opens "The/Your/Based…"). The PROVISIONAL preamble is load-bearing.
+     Margin gaps median 32–53 logits. 1,016 eligible change rows,
+     100 families.
+  3. **Final-position substrate FAILS the gate**: real-Δ median recovery
+     0.014 (0/1,016 rows > 0.5; p99 0.17; direction 75.7%); JS-to-cf
+     0.982→0.981; controls: unrelated/random 0.002 (direction ~55%), zero
+     exact 0, W_U answer-direction 0.100. Real beats unspecific ~7× — a
+     specific but tiny signal. Since h_base+Δ_final = h_cf bitwise at that
+     position: the final-position L20 state carries ~1.4% of the answer;
+     the rest flows through layers 21–27 attention from earlier positions.
+  4. **Site decomposition**: ALL-positions patch = exactly 1.000 (positive
+     control; machinery certified). **Edit-token-only = 0.983 median, 100%
+     of rows > 0.5, 100% direction-correct**, in all three live cells
+     (per-cell medians 0.974–0.987, tight family-bootstrap CIs), both
+     strata, both query orders; JS recovery 0.995; top-10 overlap 0.5→0.9.
+     post-edit-excl-edit 0.017. Controls at the edit site: random 0.019,
+     reverse −0.025 (floor-limited), same-transition other pair 0.955
+     (n=78), **unrelated real Δ 0.169 — exceeds the §9 control bound 0.10**
+     (nonspecific old-binding disruption; specific:nonspecific ≈ 6:1).
+  5. Distractor arm at the edit site: same-norm (~76) distractor deltas →
+     99.2% answer retention, JS-to-base 0.0006 — the site is
+     value-binding-selective, not norm-sensitive. Final-position distractor
+     arm likewise inert (99.4%).
+- Interpretation (separate): v1's premise fails at its pre-registered site
+  and holds one position left; this is the gating order doing its job.
+  Caption-grounding consequence (already anticipated by v1 §4): the
+  transition slot is groundable from an edit-site delta in any query order;
+  the behavioral "answer unaffected" claim only in query-first cells. The
+  same-transition prototype nearly ties the own-pair delta → §10's
+  "transition-code" outcome is likely; per-example-vs-prototype goes to
+  Stage B's mean hierarchy at train-scale coverage (dev n=78 is thin).
+  Token-identity-vs-transition content is NOT yet distinguished. No AV/AR
+  claims of any kind are made here.
+- Plots: `plots/2026-07-19_stage_a_screen_eligibility.png`,
+  `…_stage_a_margin_recovery_matrix.png`, `…_stage_a_js_recovery_matrix.png`,
+  `…_stage_a_site_decomposition.png`.
+- Next (user decisions): freeze substrate = edit site, L20, raw/preamble
+  primary cell; rule on the §9 unrelated-control bound; preamble sign-off
+  (now empirically load-bearing: 74% vs 33% eligibility); then Stage B
+  diagnostics on edit-site deltas. Test split untouched.
+
 ## 2026-07-19 — Orientation #3 (fresh instance): spot-check audit of both prior orientations, sidecar verified from HF release, methods doc arrived (no GPU work)
 
 - Phase: exploration (orientation; no experiments run). Mode per session brief:
