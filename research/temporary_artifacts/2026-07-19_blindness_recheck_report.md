@@ -6,6 +6,16 @@ a property of the linear probe: GBM AUC ~0.63 under query_first with query_last
 at chance, presented as a causal dissociation a confound could not produce.
 **Phase:** validation (adversarial check of a load-bearing null).
 
+## Question
+
+Is the "edit-site delta is behaviorally blind" null (target-vs-distractor
+AUC ≈ 0.5, the basis for "consequence/NO_CHANGE not groundable" and the
+derived-relation pivot) an artifact of the linear probe used to measure it —
+i.e., does a nonlinear reader find a real relevance signal the linear null
+missed? Why it matters: the downstream reader (the AV) is a full LM, so a
+linear-only null under-instruments the claim; if a real query_first consequence
+signal existed at the edit site, the pivot premise would change.
+
 ## Bottom line
 
 The user's critique was **half right, and the half that was right improves the

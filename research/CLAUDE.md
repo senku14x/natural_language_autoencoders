@@ -48,11 +48,17 @@ Before doing any research work in a session, read in order:
    the cross-paper synthesis; read together with the context doc.
 6. `research/ARTIFACTS.md` — running log of reports and result analyses; check
    it to see what has already been run and found.
-7. `research/temporary_artifacts/2026-07-19_SESSION_HANDOFF.md` — **the GPU
-   work is done through Stage A + an exploratory arc (dev split).** Read this
-   before re-running anything; it has the full order, numbers, and decision
-   state. Companion: `research/docs/NEW_WARMSTART_CRUXES.md` — cruxes, fixes,
-   and the go/no-go probe checklist for the next diverse-warm-start build.
+7. `research/temporary_artifacts/2026-07-19_SESSION_HANDOFF.md` — Stage A +
+   the first exploratory arc (dev split): full order, numbers, decision state.
+   Companion: `research/docs/NEW_WARMSTART_CRUXES.md` — cruxes, fixes, and the
+   go/no-go probe checklist (see its 2026-07-19 addendum for which items are
+   now discharged).
+8. `research/temporary_artifacts/2026-07-19_SESSION_SUMMARY_negdelta_lens_sft.md`
+   — **the latest results arc** (−Δ sign convention, trivial-decoder null,
+   transition SFT + controls, the registered test_value spend, and the
+   blindness-null re-check). Read before re-running anything; every experiment
+   has a predictions file registered before its run and a report stating what
+   was tested and why.
 
 ## Repo facts that constrain the plan (verified in code, 2026-07-18)
 
@@ -86,11 +92,24 @@ exploratory reports. Binding facts established this session:
   is behaviorally dead — the PROVISIONAL preamble is load-bearing). No dataset
   regeneration needed (edit positions 74–98 clear the AV floor).
 - **The edit-site delta is a general, position-invariant TOKEN-IDENTITY code
-  for the value transition.** old/new each ~0.95(colors)/0.87(names) linearly
-  decodable; basis stable across edit-pos 3→122; **unseen values are
-  consistently represented** (0.89 leave-family-out 1-NN). Released AV
-  zero-shot names the new value 74% (vs 0% shuffled/random). A diverse
-  warm-start will read `old→new` robustly, incl. new values.
+  for the value transition — now read end-to-end.** old/new each ~0.95/0.87
+  linearly decodable; basis stable across edit-pos 3→122; unseen values
+  consistently represented (0.89 leave-family-out 1-NN). Released AV zero-shot
+  names the new value 74% (vs 0% shuffled/random); **the 74/0 new/old
+  asymmetry is a SIGN CONVENTION** (−Δ names old 0.70/new 0.00 — the AV reads
+  whichever endpoint sits in the positive direction). **The code is in neither
+  weight-derived basis**: unembedding readout W_U·(RMSNorm)Δ ≤0.04 top-5 and
+  raw states also unreadable (rank ~15k/152k) — "logit-lens-like" is retired;
+  only trained readers decode it. **A LoRA SFT of the released AV emits
+  `old -> new` at 0.997** (dev pair-exact; shuffled-Δ control 0.000;
+  permuted-Δ eval emits the donor's transition 0.997; unseen transitions of
+  seen values 0.993), and — the registered `test_value` spend — **names
+  held-out values it never emitted in training** (seen→held 1.000, held→seen
+  0.878; held-side field 0.94 strict/0.96 case-insens.; all misses surface
+  garbles, zero color substitutions). Value code = general at representation
+  AND reader level (S stratum). **`test_value` is now SPENT for reader-level
+  questions — do not reuse.** Reports: `2026-07-19_{negdelta_av,
+  trivial_decoder, sft_transition, testvalue_reader}_report.md`.
 - **The delta is behaviorally BLIND.** target-vs-distractor AUC ≈ 0.5 at the
   edit site AND the final position, every layer, both query orders. Re-checked
   2026-07-19 under a nonlinear reader (GBM): an apparent query_first-only
@@ -105,10 +124,15 @@ exploratory reports. Binding facts established this session:
   not *whether it matters*; and for TARGET rows edited==queried, so the two
   are confounded by construction. Consequence/NO_CHANGE are NOT groundable
   from this dataset's edit-site delta.
-- **Implication:** the real leverage is **derived-relation families** (answer ≠
-  edited token) + a magnitude/availability channel — not more transition data.
-  Unrun: within-prompt position sweep (only edit + final checked; pre-edit
-  deltas are exactly zero).
+- **Implication:** the transition channel is closed as a question — a robust,
+  bidirectional, value-general reader exists and every trivializing
+  explanation (label prior, pair lookup, sign asymmetry, unembedding readout,
+  vocabulary collapse, position artifact) is ruled out or bounded. The sole
+  remaining frontier for "more than a token code" is **derived-relation
+  families** (answer ≠ edited token; backlog Extension C) + a magnitude/
+  availability channel. Not run: within-prompt position sweep; EXP-1
+  layer-sweep null nonlinearly (linear-only; low artifact exposure); the
+  Stage C format×init 2×2 (SFT ran one cell: arrow × released-init).
 
 ## Interface gotchas verified this session (silent failure modes)
 

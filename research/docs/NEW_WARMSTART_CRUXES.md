@@ -62,3 +62,43 @@ Run these as the go/no-go battery *before* trusting any caption metric:
 ## 4. One-line orientation for the next session
 
 The delta is a **general, position-invariant, token-identity code for the value transition** — good enough that a diverse warm-start will read `old → new` robustly, including unseen values. It is **behaviorally blind**: the consequence lives only as late-final answer-change magnitude, which the AV interface erases. So the next real progress is not more transition data — it is **derived-relation families** (to make consequence-reading distinguishable from token-naming) and a **magnitude/availability channel** (to ground `NO_CHANGE`), each with the direction-vs-magnitude and decoder-free controls that caught today's two measurement traps.
+
+---
+
+## 5. Addendum (2026-07-19, post-SFT arc) — status of the cruxes and checklist
+
+The −Δ / trivial-decoder / SFT / test_value / blindness-re-check arc (see
+`temporary_artifacts/2026-07-19_SESSION_SUMMARY_negdelta_lens_sft.md`) updates
+this memo as follows:
+
+- **§0.1 prediction confirmed at the reader level.** A LoRA SFT of the released
+  AV reads `old -> new` at 0.997 (shuffled-Δ 0.000) and **names held-out
+  values** (0.94–1.00 per class; misses are surface garbles, never color
+  substitutions). The "a decoder just can't NAME them" limitation was specific
+  to closed-vocabulary decoders, as suspected — the AV itself is the inclusive
+  decoder and it names them. `test_value` is now **spent** for reader-level
+  questions.
+- **C1/§0.2 (blindness) strengthened, with a new trap logged.** A nonlinear
+  (GBM) re-check surfaced an apparent query_first-only signal (0.66) that is
+  an `edit_pos` template artifact (metadata-only baseline 0.87;
+  position-matched GBM at chance both query orders). The null now rests on a
+  nonlinear, position-controlled footing. **New standing rule:** any
+  discriminator on this dataset must position-match (or covariate-control
+  `edit_pos`) under query_first and report the metadata-only baseline
+  (`temporary_artifacts/2026-07-19_blindness_recheck_report.md`).
+- **C3 narrowed to its final form.** Held-out values no longer carry any of
+  the language-earns-its-keep burden — they generalize at both representation
+  and reader level. The claim remains capped at a (now value-general)
+  token-identity code; the entire remaining burden sits on **derived-relation
+  families** and paraphrase/edit semantics.
+- **New methods fact for C6:** the value code is in *neither* weight-derived
+  basis (unembedding top-5 ≤0.04 on deltas AND raw states; input-embedding
+  retrieval already null) — never use W_U or embedding readouts as sensitivity
+  controls at this site; and variance-ranked PCA positive controls do not
+  certify low-variance sensitivity (use planted-direction checks).
+- **§3 checklist status:** item 1 ✓ (again, via SFT); item 2 ✓ strengthened
+  (nonlinear + position-matched, still 0.5); item 4 ✓ both halves (4a 1-NN
+  0.89 prior arc; 4b reader-naming this arc); item 7 ✓ for the transition
+  channel (shuffled/permuted/no-Δ-strategy floors all clean). Items 3
+  (magnitude channel), 5 (derived families), 6 (NO_CHANGE grounding) remain
+  open and are the frontier.
