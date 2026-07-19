@@ -30,15 +30,24 @@ def test_renders_match_amendment_examples():
         "The color assigned to jeck changes from brown to coral."
     c3 = rc.render_all(r3)  # other_slot distractor: florp edited, jeck queried
     assert c3["caption_arrow_transition"] == "NO_CHANGE"
-    assert c3["caption_arrow_entity"] == "florp: mint -> gray | queried: jeck unaffected"
+    assert c3["caption_arrow_entity"] == "florp: mint -> gray | answer unaffected"
     assert c3["caption_sentence_entity"] == \
-        "The color assigned to florp changes from mint to gray; the queried entity jeck is unaffected."
+        "The color assigned to florp changes from mint to gray; the queried answer is unaffected."
 
 
-def test_crossed_query_distractor_names_queried_entity():
-    _, r2, *_ = _s_family()  # jeck edited, florp queried
+def test_distractor_forms_never_name_the_queried_entity():
+    """Post-review split (amendment §11): the behavioral claim ships, the
+    queried-entity NAME is reserved pending the Stage-B queried-entity probe."""
+    fam = _s_family()
+    for sem in fam:
+        c = rc.render_all(sem)
+        for col in rc.CAPTION_COLUMNS:
+            assert "queried:" not in c[col]
+            assert "queried entity" not in c[col]
+    _, r2, *_ = fam  # crossed_query: jeck edited, florp queried
     c2 = rc.render_all(r2)
-    assert c2["caption_arrow_entity"] == "jeck: brown -> coral | queried: florp unaffected"
+    assert c2["caption_arrow_entity"] == "jeck: brown -> coral | answer unaffected"
+    assert "florp" not in c2["caption_arrow_entity"]
     assert c2["caption_arrow_transition"] == "NO_CHANGE"
 
 
@@ -48,7 +57,7 @@ def test_n_stratum_uses_slot_words():
     assert rc.render_all(r1)["caption_sentence_entity"] == \
         "The name changes from Chen to Omar."
     assert rc.render_all(r3)["caption_sentence_entity"] == \
-        "The city changes from Karachi to Lahore; the queried name is unaffected."
+        "The city changes from Karachi to Lahore; the queried answer is unaffected."
 
 
 def test_null_renders_plain_no_change_in_all_formats():
@@ -74,9 +83,12 @@ def test_round_trip_and_cross_canonical_for_every_cell():
     (rc.parse_sentence_transition, "The value changes from brown to coral"),
     (rc.parse_sentence_transition, "the value changes from brown to coral."),
     (rc.parse_arrow_entity, "jeck brown -> coral"),
-    (rc.parse_arrow_entity, "jeck: brown -> coral | queried: florp"),
+    (rc.parse_arrow_entity, "jeck: brown -> coral | queried: florp unaffected"),
+    (rc.parse_arrow_entity, "jeck: brown -> coral | answer  unaffected"),
     (rc.parse_sentence_entity, "The colour assigned to jeck changes from brown to coral."),
     (rc.parse_sentence_entity, "The color assigned to jeck changes from brown to coral;"),
+    (rc.parse_sentence_entity,
+     "The color assigned to florp changes from mint to gray; the queried entity jeck is unaffected."),
 ])
 def test_parser_strictness(parser, bad):
     with pytest.raises(ValueError):

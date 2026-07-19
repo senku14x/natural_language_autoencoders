@@ -1,10 +1,10 @@
 {
   "dataset": "counterfactual_difference_nla_v1",
-  "generated_at": "2026-07-18T17:32:06.766292+00:00",
+  "generated_at": "2026-07-19T09:03:12.863837+00:00",
   "model_id": "Qwen/Qwen2.5-7B-Instruct",
   "tokenizer_revision_sha": "a09a35458c702b33eeacc393d103063234e8bc28",
   "intended_model_revision_sha": "a09a35458c702b33eeacc393d103063234e8bc28",
-  "code_commit": "e04fea3ffc7d4496dc0c8710bb4db4b8429eba6a",
+  "code_commit": "d147667b10b1558a4377f3cfc5a2e3c603bf5eb5",
   "config_hash": "0d85e5a602c4a4aafbf1ac77550d93d7c63d15922071cdcfb71b646ab207c457",
   "seed": 20260718,
   "counts": {
@@ -3151,7 +3151,7 @@
     "NOT_IDENTIFIABLE_FROM_THIS_STATE"
   ],
   "caption_renderers": {
-    "version": "amendment1-r1",
+    "version": "amendment1-r2",
     "columns": [
       "caption_arrow_transition",
       "caption_sentence_transition",

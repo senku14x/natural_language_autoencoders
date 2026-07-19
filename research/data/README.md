@@ -114,15 +114,13 @@ semantic pair at generation time. The legacy `caption` column is the
 unchanged pre-amendment single-field render. Content/format selection is a
 training-time column choice; the entity-content decision is gated on Stage B.
 
-**Flagged tension (unresolved, implemented per the amendment's §2.1
-examples):** the distractor entity-content forms name the queried entity
-("`| queried: jeck unaffected`"), but the amendment's own §3 marks the
-unaffected-entity clause "treat as a measurement, not a caption field,
-until tested" — the queried-entity name may not be recoverable from the
-delta if shared-context contributions cancel. The behavioral part of the
-clause ("unaffected") is required (it carries the NO_CHANGE claim that §6
-gates on); the *naming* part is the questionable slot. If the naming clause
-is cut, `rich_captions.py` changes two lines and regeneration takes ~30 s.
+**Resolved (amendment §11.1, renderer `amendment1-r2`):** distractor
+entity-content forms carry the behavioral claim only —
+"`| answer unaffected`" / "; the queried answer is unaffected." — grounded
+by Stage A. The queried-entity NAME is a reserved slot, licensable only by
+the Stage-B queried-entity probe (can query identity be decoded from
+Δ_final across edit-matched crossed pairs?). The r1 naming forms are now
+parse errors by design.
 
 ## Schema notes
 

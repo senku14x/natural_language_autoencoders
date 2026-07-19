@@ -12,18 +12,19 @@ NULL_AA rows (no edit exists) render as the plain no-change form in every
 renderer. The hard rule of amendment §3 holds by construction: no renderer
 emits magnitude, intensity, or confidence language.
 
-NOTE (flagged for review): the distractor forms name the QUERIED entity
-("| queried: jeck unaffected"), per the amendment's §2.1 examples — even
-though §3 marks the unaffected-entity clause "treat as a measurement, not a
-caption field, until tested". See README; cutting the clause is a two-line
-change + regeneration.
+Post-review revision (amendment §11): the distractor forms carry the
+behavioral claim only ("| answer unaffected") — grounded by Stage A. The
+QUERIED-ENTITY NAME is a separate slot whose groundedness (is query identity
+recoverable from Δ_final?) is gated on the Stage-B queried-entity probe; no
+renderer emits it, and RichCaption.queried is reserved until that probe
+licenses it.
 """
 
 import hashlib
 import re
 from dataclasses import dataclass
 
-RENDERER_VERSION = "amendment1-r1"
+RENDERER_VERSION = "amendment1-r2"
 
 CAPTION_COLUMNS = (
     "caption_arrow_transition",
@@ -47,6 +48,8 @@ class RichCaption:
     old: str | None = None
     new: str | None = None
     entity: str | None = None
+    # reserved: never rendered/parsed in v1; licensable only by the Stage-B
+    # queried-entity probe (amendment §11.1)
     queried: str | None = None
 
 
@@ -61,9 +64,8 @@ def rich_from_semantic(sem) -> RichCaption:
         return RichCaption("no_change")
     ent = _entity_token(sem, sem.edited_slot)
     if sem.answer_old != sem.answer_new:          # TARGET_EDIT / REVERSE
-        return RichCaption("change", sem.value_old, sem.value_new, ent, None)
-    q = _entity_token(sem, sem.queried_slot)      # DISTRACTOR_EDIT
-    return RichCaption("distractor_change", sem.value_old, sem.value_new, ent, q)
+        return RichCaption("change", sem.value_old, sem.value_new, ent)
+    return RichCaption("distractor_change", sem.value_old, sem.value_new, ent)
 
 
 # ---------------------------------------------------------------- transition
@@ -104,21 +106,20 @@ def render_arrow_entity(c: RichCaption) -> str:
     if c.kind == "change":
         return f"{c.entity}: {c.old} -> {c.new}"
     if c.kind == "distractor_change":
-        return f"{c.entity}: {c.old} -> {c.new} | queried: {c.queried} unaffected"
+        return f"{c.entity}: {c.old} -> {c.new} | answer unaffected"
     return "NO_CHANGE"
 
 
 def parse_arrow_entity(s: str) -> RichCaption:
     if s == "NO_CHANGE":
         return RichCaption("no_change")
-    m = re.fullmatch(
-        rf"({_V}): ({_V}) -> ({_V})(?: \| queried: ({_V}) unaffected)?", s)
+    m = re.fullmatch(rf"({_V}): ({_V}) -> ({_V})( \| answer unaffected)?", s)
     if not m:
         raise ValueError(f"unparseable arrow_entity: {s!r}")
-    e, old, new, q = m.groups()
-    if q is None:
-        return RichCaption("change", old, new, e, None)
-    return RichCaption("distractor_change", old, new, e, q)
+    e, old, new, clause = m.groups()
+    if clause is None:
+        return RichCaption("change", old, new, e)
+    return RichCaption("distractor_change", old, new, e)
 
 
 def _sentence_entity_change(c: RichCaption, stratum: str) -> str:
@@ -131,10 +132,7 @@ def render_sentence_entity(c: RichCaption, stratum: str) -> str:
     if c.kind == "change":
         return _sentence_entity_change(c, stratum) + "."
     if c.kind == "distractor_change":
-        head = _sentence_entity_change(c, stratum)
-        if stratum == "S":
-            return f"{head}; the queried entity {c.queried} is unaffected."
-        return f"{head}; the queried {c.queried} is unaffected."
+        return _sentence_entity_change(c, stratum) + "; the queried answer is unaffected."
     return "The queried value is unchanged."
 
 
@@ -144,18 +142,18 @@ def parse_sentence_entity(s: str) -> RichCaption:
     pats = [
         # stratum S
         (rf"The color assigned to ({_V}) changes from ({_V}) to ({_V})"
-         rf"(?:; the queried entity ({_V}) is unaffected)?\."),
+         rf"(; the queried answer is unaffected)?\."),
         # stratum N (entity token is the slot word)
         (rf"The (name|city) changes from ({_V}) to ({_V})"
-         rf"(?:; the queried (name|city) is unaffected)?\."),
+         rf"(; the queried answer is unaffected)?\."),
     ]
     for p in pats:
         m = re.fullmatch(p, s)
         if m:
-            e, old, new, q = m.groups()
-            if q is None:
-                return RichCaption("change", old, new, e, None)
-            return RichCaption("distractor_change", old, new, e, q)
+            e, old, new, clause = m.groups()
+            if clause is None:
+                return RichCaption("change", old, new, e)
+            return RichCaption("distractor_change", old, new, e)
     raise ValueError(f"unparseable sentence_entity: {s!r}")
 
 
@@ -170,7 +168,7 @@ def canonical_transition(c: RichCaption) -> tuple:
 
 
 def canonical_entity(c: RichCaption) -> tuple:
-    return (c.kind, c.old, c.new, c.entity, c.queried)
+    return (c.kind, c.old, c.new, c.entity)
 
 
 def render_all(sem) -> dict[str, str]:

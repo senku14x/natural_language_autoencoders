@@ -27,6 +27,26 @@ that save the most compute later.
 
 ---
 
+## 2026-07-18 — Amendment 1 §11 revisions applied (renderer r2)
+
+- Phase: execution
+- What changed (all four review decisions accepted by user):
+  1. Distractor entity forms now carry the behavioral claim only
+     ("`| answer unaffected`"); queried-entity NAME reserved. Renderer
+     `amendment1-r2`; r1 naming forms are parse errors.
+  2. Stage B gains the queried-entity probe (amendment §4): decode query
+     identity from Δ_final across edit-matched crossed pairs; decision rule
+     recorded. Without it the naming slot is permanently undecidable.
+  3. Tuple-mean result de-scoped: licenses nothing at final position (Stage A
+     passing entails Δ_final is query-dependent). Qwen3-8B result citation
+     EMBARGOED until its logs are imported into research/.
+  4. §6 gate split (real-Δ ≥ prior+40pp; shuffled-Δ collapses to prior) and
+     vanilla-init pinned to identical sidecar mechanics, fresh weights only.
+- Verification: regeneration reproduced all 58,320 pairs with pair_id,
+  input_ids, legacy caption, and both transition columns unchanged; only
+  entity-content columns changed. 66/66 tests pass.
+- Artifacts: `research/data/artifacts/v1/` refreshed.
+
 ## 2026-07-18 — Amendment 1 applied: four caption columns added to frozen v1
 
 - Phase: execution
