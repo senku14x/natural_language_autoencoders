@@ -181,6 +181,7 @@ failure is not spent as if it were news.
 
 - Plots: `plots/2026-07-19_v1_final_pos_vs_training_floor.png` (new);
   prior session's two plots re-verified against independent recomputation.
+- Standalone report: `temporary_artifacts/2026-07-19_orientation_report.md`.
 - Next: Stage A unchanged as the recommended next action (see chat summary);
   before GPU spend, user sign-offs wanted on: preamble text (PROVISIONAL),
   name-survivor list, slot2 R4/R6 retention, and (if available) the Qwen3-8B

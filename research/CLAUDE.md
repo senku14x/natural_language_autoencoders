@@ -106,8 +106,10 @@ https://www.anthropic.com/research/natural-language-autoencoders
   `Co-Authored-By` trailer naming the Claude model that did the work.
 - **Artifacts**: every research report or result analysis gets a dated entry
   in `research/ARTIFACTS.md` (format described there). Plots go under
-  `research/plots/` and are linked from the entry. Prefer a plot over a table
-  of numbers whenever the shape of the data carries the point.
+  `research/plots/` and are linked from the entry. Standalone report files
+  live in `research/temporary_artifacts/` and are linked from their log
+  entry. Prefer a plot over a table of numbers whenever the shape of the
+  data carries the point.
 - **When unsure, ask the user.** In particular: scope changes, anything
   destructive, and any deviation from the gating order below.
 
