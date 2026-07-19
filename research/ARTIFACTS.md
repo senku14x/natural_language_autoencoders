@@ -27,6 +27,41 @@ that save the most compute later.
 
 ---
 
+## 2026-07-19 — test_value (registered single spend): the SFT'd reader NAMES held-out values — 0.94/0.96 held-side, misses are surface garbles, not substitutions
+
+- Phase: validation (reader-generalization crux, cruxes §C3 / probe item 4).
+  User-approved spend of the split (its second and FINAL reader-relevant
+  touch; first was EXP-2's probe-level 1-NN). Predictions + protocol
+  registered first (`temporary_artifacts/2026-07-19_testvalue_predictions.md`);
+  report `temporary_artifacts/2026-07-19_testvalue_reader_report.md`; script
+  `research/exploratory/testvalue_reader_eval.py`; data
+  `data/artifacts/v1/testvalue_reader/`.
+- Setup: 480 test_value raw/pre change rows (60 fresh families, S only;
+  held-out colors charcoal/cream/green/lavender, absent from eligible train
+  captions), screened with the train-pass rule (eligibility 44.2%; held-value
+  rows screen lower, 0.35 vs 0.54 — prediction miss, owned); Δ at edit_pos;
+  arms = SFT adapter × real Δ (greedy, strict parse), SFT × permuted Δ,
+  zero-shot released AV × real Δ (string match).
+- Observations (family-bootstrap 95% CI): pair-exact seen→seen **1.000**
+  (n=130), seen→held **1.000** (41), held→seen **0.878** [0.74, 0.98] (41);
+  held-side field accuracy **0.939** strict / **0.963** case-insensitive vs
+  seen-side 0.994; ALL five held-side misses are surface-form garbles of the
+  correct word ("Charcoal -> Navy" ×2, "charlie", "crem", "cremation"), zero
+  nearest-color substitutions; zero-shot AV mentions held new values 0.941
+  (≈ seen 0.800) — no train/held distinction, as predicted; permuted-Δ
+  own-label 0.000 / donor 0.976; Δ-ignoring floor for held values is exactly 0.
+- Interpretation (separate): **registered "reader generalizes" branch fired**
+  — with EXP-2's 1-NN 0.89, the value code is general at BOTH representation
+  and reader level under these conditions; no SFT-induced vocabulary collapse;
+  the residual held-side deficit is surface-form and sits on the old
+  (sign-negative) side, consistent with 1a. The language-earns-its-keep
+  question now lives entirely in derived families. NOT established:
+  consequence/NO_CHANGE, N-stratum values (split is S-only), anything beyond
+  the two-slot token code.
+- Plot: `plots/2026-07-19_testvalue_reader.png`.
+- Next: derived-relation families (Extension C) are now unambiguously the
+  frontier; test_value is spent for reader-level questions.
+
 ## 2026-07-19 — SFT: LoRA-adapted released AV emits `old -> new` at 0.997 (shuffled-Δ control 0.000; unseen transitions of seen values 0.993)
 
 - Phase: execution/feasibility (work item 2; Stage-C-shaped but NOT the

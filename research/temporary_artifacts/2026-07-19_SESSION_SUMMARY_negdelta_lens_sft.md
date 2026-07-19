@@ -93,11 +93,25 @@ Full reports: [1a](./2026-07-19_negdelta_av_report.md) · [1b](./2026-07-19_triv
   activation caches are gitignored as regenerable; regeneration = one script
   run each).
 
+## Addendum (same day): test_value spent — the reader generalizes
+
+With user sign-off, the registered single-spend `test_value` eval ran
+([predictions](./2026-07-19_testvalue_predictions.md) ·
+[report](./2026-07-19_testvalue_reader_report.md) ·
+plot `../plots/2026-07-19_testvalue_reader.png`). Outcome: **the SFT'd AV names
+held-out values it never emitted in training** — seen→held pair-exact 1.000,
+held→seen 0.878 [0.74, 0.98], held-side field accuracy 0.939 strict / 0.963
+case-insensitive; every miss is a surface-form garble of the correct word
+("Charcoal", "crem"), never a nearest-color substitution; zero-shot reference
+reads held values normally (0.941); permuted-Δ floor 0.000. Combined with
+EXP-2's 1-NN, the value code is general at both representation and reader
+level (S stratum, this site/model). No vocabulary collapse.
+
 ## Recommended next (user decision)
 
-1. **`test_value` eval with the saved real adapter** — the exact §C3 crux
-   (general value code vs per-value dictionary), ~minutes of compute, but it is
-   the **last unspent split**: register the protocol and get sign-off first.
-2. Derived-relation mini-set (Extension C) — the correct next build (dataset
-   job; separates consequence-reading from token-naming).
+1. ~~`test_value` eval~~ — **done** (see addendum); the split is now spent for
+   reader-level questions.
+2. **Derived-relation mini-set (Extension C)** — now unambiguously the
+   frontier: the only remaining axis where the channel could be more than a
+   token-identity code (separates consequence-reading from token-naming).
 3. Retrospective import (~15 min) once the file is shared.
