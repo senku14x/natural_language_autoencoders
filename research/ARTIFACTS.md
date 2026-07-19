@@ -27,6 +27,138 @@ that save the most compute later.
 
 ---
 
+## 2026-07-19 — SFT: LoRA-adapted released AV emits `old -> new` at 0.997 (shuffled-Δ control 0.000; unseen transitions of seen values 0.993)
+
+- Phase: execution/feasibility (work item 2; Stage-C-shaped but NOT the
+  registered Stage C 2×2 — one format × one init, no vanilla arm). Predictions
+  + frozen hyperparameters registered before running
+  (`temporary_artifacts/2026-07-19_sft_predictions.md`); report
+  `temporary_artifacts/2026-07-19_sft_transition_report.md`; scripts
+  `research/exploratory/sft_{extract_train_deltas,transition_av}.py`; data +
+  adapters `data/artifacts/v1/sft_transition/`.
+- Setup: 4,348 eligible train raw/pre change rows (72.5%; screen run on this
+  instance — train was never screened; stratum split N 99.6%/S 54.4% matches
+  frozen dev pattern), Δ at edit_pos, canonical-shape forwards; caption
+  `caption_arrow_transition` + EOS after the unmodified sidecar AV prompt;
+  LoRA r=64 α=128, lr 2e-5, 3 epochs, batch 32, seed 20260719; identical
+  shuffled-Δ run (permutation transition-coincidence 0.000). Eval: 594 frozen-
+  eligible dev raw/pre change rows (families disjoint from train; all values
+  train-seen; 46.5% of rows have train-UNSEEN ordered transitions), greedy,
+  strict fullmatch parse. test_value untouched. Dev screen agreement across
+  torch versions 0.9925.
+- Observations (dev, family-bootstrap 95% CI):
+  - **real-SFT × real Δ pair-exact 0.997 [0.992, 1.000]** (S 1.000, N 0.994;
+    old 0.997 / new 0.998; parse 1.000; errors = 2 generations of one pair).
+  - **Unseen-transition rows 0.993** (276 rows) — composes per-endpoint, not a
+    per-pair lookup.
+  - **shuffled-SFT × real Δ 0.000** (= analytic Δ-ignoring floor 0.003; greedy
+    collapsed to one caption 583/594; train loss pinned at ~1.95 nats ≈ prior
+    entropy vs real ~0.001).
+  - **real-SFT × permuted Δ: own-label 0.002, donor-label 0.997** — emits the
+    injected vector's transition; activation dependence total.
+  - Registered gate analog real − shuffled = +0.997 ≫ 40pp. Prediction misses
+    owned: pair-exact predicted 0.82 [0.65,0.92], observed 0.997 — second
+    consecutive under-prediction of token-identity readability; probe numbers
+    are not a ceiling.
+- Interpretation (separate): feasibility settled — the released AV LoRA-adapts
+  to a **bidirectional, per-value-compositional token-identity read** of the
+  edit-site delta (old side = the sign-negative component per 1a). Caps stand:
+  seen values only, deterministic template ⇒ reader-is-lookup at the VALUE
+  level (Amendment 1 §10, cruxes §C3); not a language, consequence, or
+  held-out-value result; Stage C not marked passed (2×2 unrun).
+- Plot: `plots/2026-07-19_sft_transition_accuracy.png` (accuracy by arm ×
+  stratum; analytic floor, trivial-decoder 0.04, zero-shot 0.74 on same axes;
+  loss curves).
+- Next: user review. Highest-value cheap follow-up: registered, user-approved
+  `test_value` eval with the saved adapter — it is the last unspent split.
+
+## 2026-07-19 — Exploratory: trivial-decoder baseline — the unembedding CANNOT read the delta (0.04 top-5 vs AV 0.74); "logit-lens-like" retired
+
+- Phase: exploration (baseline; work item 1b). Predictions + decision rule
+  registered before running
+  (`temporary_artifacts/2026-07-19_negdelta_logitlens_predictions.md`); report
+  `temporary_artifacts/2026-07-19_trivial_decoder_report.md`; script
+  `research/exploratory/trivial_decoder_baseline.py`; data
+  `zeroshot_av/trivial_decoder.parquet`, `trivial_decoder_top5.json`.
+- Question: does `W_U·Δ` / `W_U·RMSNorm(Δ)` recover the new value at anything
+  near the AV's 0.74 (the zero-shot report asserted "logit-lens-like" 4× without
+  measuring it)?
+- Setup: same 50 pairs / saved edit-site states / token-level translation of the
+  string rule (audited surface-form ids); exact shuffled donors from
+  `scored.parquet`; state positive controls; both norm conventions; no forwards
+  (only `lm_head.weight` + `model.norm.weight`; untied verified; plumbing check
+  passed).
+- Observations (dev, this setup): best convention top-5 new|+Δ **0.04** (top-1
+  0.02); raw 0.00; −Δ→old 0.00; **state controls also 0.00** (h_cf→new median
+  rank 15,022/152,064; Δ 11,900; shuffled donor 68,386); top-5 decodes are
+  mid-layer noise tokens. AV references on the same vectors: 0.740 / 0.696.
+  Prediction miss in the informative direction (predicted lens top-5 ~0.45, gave
+  20% to "AV ≫ lens").
+- **Registered decision rule fires on the AV ≫ lens branch**: the AV decodes
+  something the trivial unembedding readout does not — the first result in the
+  arc a trivial baseline fails to reproduce. The value code at edit-site L20 is
+  in neither the unembedding basis (states fail too) nor the input-embedding
+  basis (EXP-2 null, prior session): a "middle" code readable by trained probe
+  (0.96/0.87) and trained AV (0.74) only.
+- Interpretation (separate): retire "logit-lens-like" from the zero-shot
+  report's framing. Does NOT establish AV > trained probe (0.74 < 0.87–0.96,
+  consistent with the probes-ceiling literature) and does not upgrade the
+  content — still a token-identity code (Amendment 1 §10 cap).
+- Plot: `plots/2026-07-19_trivial_decoder_vs_av.png` (AV, lens, floors, probe
+  ceiling, same axes, both directions).
+- Next: user review. Feeds the SFT writeup: "decodes a non-trivially-readable
+  token-identity code," not "reads the transition."
+
+## 2026-07-19 — Exploratory: −Δ arm — the AV's old/new asymmetry is a SIGN CONVENTION (−Δ names old 0.70, new 0.00)
+
+- Phase: exploration (work item 1a; released AV, no fine-tuning). Predictions
+  registered first (same predictions file as above; P1–P3); report
+  `temporary_artifacts/2026-07-19_negdelta_av_report.md`; script
+  `research/exploratory/negdelta_av_arm.py`; data
+  `zeroshot_av/negdelta_{scored.parquet,explanations.json,summary.json}`.
+- Question: probe decodes both endpoints from Δ (~0.96/0.96) but the AV names
+  new 0.74 / old 0.00 — is the old side AV-inaccessible or is it a sign
+  convention?
+- Setup: same 50 pairs / saved `h_edit_{base,cf}.npy` / string rule / seed
+  20260719; −Δ injected, 5 samples × 50 pairs @ T=1; sidecar-driven; new
+  instance (torch 2.12.0+cu130 — AV generation only; activations are the saved
+  arrays). Pre-registered fact: REVERSE pairs are exact prompt swaps of their
+  TARGET partners (200/200 verified) ⇒ −Δ(row) is bitwise the partner row's
+  real Δ ⇒ outcome heavily favored a priori (registered as such).
+- Observations (dev, this setup; pair-bootstrap 95% CI): **−Δ names old 0.696
+  [0.580, 0.804], new 0.000**; strata S 0.854 / N 0.525 (mirror of real arm
+  0.892/0.575); paired (−Δ old) − (real new) = −0.044 [−0.176, +0.092];
+  entity mention 0.000; same value-word-in-confabulated-prose pattern (random
+  inspection in report).
+- Interpretation (separate): **sign convention confirmed** — the AV names
+  whichever token identity sits in the positive direction; both endpoints are
+  AV-accessible, one per sign. The SFT therefore teaches a *bidirectional read
+  of a code already decodable one direction at a time*; an SFT gain on the old
+  field must not be sold as "learning the transition." Scope cap unchanged
+  (token identity; Amendment 1 §10, cruxes §C3).
+- Plot: `plots/2026-07-19_negdelta_av_mention_rates.png` (all 7 arms, floor
+  drawn).
+- Next: user review; proceed to work item 2 (SFT) per session brief.
+
+## 2026-07-19 — Standing instructions registered; retrospective import still blocked (file absent)
+
+- Phase: execution (work item 0, partial). The user's Part 0 standing
+  instructions are registered verbatim as
+  `research/docs/STANDING_INSTRUCTIONS.md` and linked as item 0 of the
+  `research/CLAUDE.md` read order.
+- **The Qwen3-8B retrospective file
+  (`META_MODEL_INTERPRETABILITY_RETROSPECTIVE_AND_TEMPORAL_NLA_HANDOFF_2026-07-18.md`)
+  is NOT on this instance** (searched repo, home, scratchpad, filesystem-wide) —
+  sixth absence flag across sessions. Import, the §11.2 provenance entry, and
+  the two establishing facts (predicted-Stage-A; edit+final redundancy closure)
+  remain blocked until the user re-shares the file. Not fabricated; nothing
+  registered.
+- Environment note for this instance: `/workspace` is **not** volume-backed
+  (`workspace_is_volume: false`) — nothing survives recycle/destroy; HF_HOME
+  = `/workspace/.hf_home`; torch 2.12.0+cu130 (prior sessions 2.7.0+cu128);
+  transformers pinned 5.14.1; pytest 65 passed / 1 skipped; pinned tokenizer
+  re-fetched at the dataset SHA.
+
 ## 2026-07-19 — Exploratory: consequence is late-final MAGNITUDE only; unseen values ARE consistently represented
 
 - Phase: exploration. Probe-only; test_value used with explicit user approval.

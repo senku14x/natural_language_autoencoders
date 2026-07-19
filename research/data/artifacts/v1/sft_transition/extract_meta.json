@@ -1,0 +1,12 @@
+{
+ "train_rows": 6000,
+ "train_eligible": 4348,
+ "dev_rows": 800,
+ "dev_eligible_frozen": 594,
+ "dev_agreement": 0.9925,
+ "canonical_shape": [
+  64,
+  131
+ ],
+ "torch": "2.12.0+cu130"
+}

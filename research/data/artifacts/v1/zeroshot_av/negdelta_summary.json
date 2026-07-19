@@ -1,0 +1,28 @@
+{
+ "arm": "neg_delta",
+ "n_gen": 250,
+ "new_hit": 0.0,
+ "new_hit_ci": [
+  0.0,
+  0.0
+ ],
+ "old_hit": 0.696,
+ "old_hit_ci": [
+  0.58,
+  0.804
+ ],
+ "entity_hit": 0.0,
+ "entity_hit_ci": [
+  0.0,
+  0.0
+ ],
+ "old_hit_N": 0.525,
+ "old_hit_S": 0.854,
+ "mean_other_vals": 0.28,
+ "no_tag_rate": 0.0,
+ "negold_minus_realnew": -0.044,
+ "negold_minus_realnew_ci": [
+  -0.17600000000000002,
+  0.09209999999999856
+ ]
+}

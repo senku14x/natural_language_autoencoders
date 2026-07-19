@@ -11,6 +11,12 @@ files under `miles/`.
 
 Before doing any research work in a session, read in order:
 
+0. `research/docs/STANDING_INSTRUCTIONS.md` — the user's standing
+   instructions (verbatim Part 0 of the 2026-07-19 working-session brief:
+   research-phase matching, evidence calibration, information-gain
+   prioritization, rigor scaling, method minimalism, commit/branch/report
+   rules, confidentiality). These govern every session; registered here so
+   they apply without re-pasting.
 1. `research/docs/NLA_JSPACE_RESEARCH_CONTEXT.md` — durable methods context
    for NLA, J-lens/J-space, and the behavioral-difference project framing.
    Sections 4 (methodological takeaways: four-claims separation, evidence

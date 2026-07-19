@@ -1,0 +1,141 @@
+{
+ "seed": 20260719,
+ "epochs": 1,
+ "batch": 8,
+ "lr": 2e-05,
+ "train_eligible": 64,
+ "dev_eligible": 64,
+ "shuffle_coincidence_train": 0.0,
+ "analytic_floor": {
+  "pair": 0.0,
+  "old": 0.03125,
+  "new": 0.03125,
+  "mode_pair": [
+   "azure",
+   "pink"
+  ]
+ },
+ "real_curve": [
+  {
+   "epoch": 1,
+   "old_acc": 0.0,
+   "new_acc": 0.0,
+   "pair_acc": 0.0,
+   "parse_ok": 0.0
+  }
+ ],
+ "real_final_loss_mean_last50": 11.241048514842987,
+ "shuf_final_loss_mean_last50": 11.81586343050003,
+ "donor_pair_acc_real_x_perm": 0.0,
+ "real_x_real": {
+  "old_acc": 0.0,
+  "old_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "new_acc": 0.0,
+  "new_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "pair_acc": 0.0,
+  "pair_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "parse_ok": 0.0,
+  "parse_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "old_acc_S": 0.0,
+  "old_ok_S_ci": [
+   0.0,
+   0.0
+  ],
+  "new_acc_S": 0.0,
+  "new_ok_S_ci": [
+   0.0,
+   0.0
+  ],
+  "pair_acc_S": 0.0,
+  "pair_ok_S_ci": [
+   0.0,
+   0.0
+  ]
+ },
+ "real_x_perm": {
+  "old_acc": 0.0,
+  "old_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "new_acc": 0.0,
+  "new_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "pair_acc": 0.0,
+  "pair_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "parse_ok": 0.0,
+  "parse_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "old_acc_S": 0.0,
+  "old_ok_S_ci": [
+   0.0,
+   0.0
+  ],
+  "new_acc_S": 0.0,
+  "new_ok_S_ci": [
+   0.0,
+   0.0
+  ],
+  "pair_acc_S": 0.0,
+  "pair_ok_S_ci": [
+   0.0,
+   0.0
+  ]
+ },
+ "shuf_x_real": {
+  "old_acc": 0.0,
+  "old_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "new_acc": 0.0,
+  "new_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "pair_acc": 0.0,
+  "pair_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "parse_ok": 0.0,
+  "parse_ok_ci": [
+   0.0,
+   0.0
+  ],
+  "old_acc_S": 0.0,
+  "old_ok_S_ci": [
+   0.0,
+   0.0
+  ],
+  "new_acc_S": 0.0,
+  "new_ok_S_ci": [
+   0.0,
+   0.0
+  ],
+  "pair_acc_S": 0.0,
+  "pair_ok_S_ci": [
+   0.0,
+   0.0
+  ]
+ }
+}

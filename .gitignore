@@ -4,3 +4,7 @@ __pycache__/
 .pytest_cache/
 build/
 dist/
+
+# regenerable GPU-stage caches / adapters (sft_transition; scripts re-create them)
+research/data/artifacts/v1/sft_transition/adapter_*/
+research/data/artifacts/v1/sft_transition/*_h_edit_*.npy
