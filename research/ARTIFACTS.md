@@ -27,7 +27,164 @@ that save the most compute later.
 
 ---
 
-## 2026-07-19 — Session orientation: docs-vs-code audit, frozen-dataset checks, literature pass (no GPU work)
+## 2026-07-19 — Orientation #2 (fresh session): independent re-verification, new gaps, literature corrections (no GPU work)
+
+- Phase: exploration (orientation; no experiments run). Independent re-check of
+  the same-day orientation entry below — findings there were re-derived from
+  scratch, not trusted.
+- Question: does the project state survive a second, independent audit; and do
+  the ten working conclusions in the session brief survive the primary sources?
+- Setup: same H100 SXM 80GB instance state (driver 580.105.08, CUDA 12.8/nvcc
+  12.8.93, torch 2.7.0+cu128, capability sm_90, 78.7 GiB VRAM free). Repo now
+  present on the persistent NFS volume at `counterfactual_nla` (HEAD d6c4482,
+  clean, 1 commit ahead of origin). `HF_HOME` still unset (flag stands — set to
+  the NFS volume before any model download). **Egress is open on this
+  instance** (transformer-circuits, LW/GreaterWrong, arXiv, GitHub, HF all
+  reachable) — unlike the generation session's proxy block; Stage A downloads
+  are unblocked. `pytest` 9.1.1 aborts at collection because the *system*
+  libtmux pytest plugin applies a mark to a fixture; run with `-p no:libtmux`
+  → 65 passed, 1 skipped (integration test needs the pinned tokenizer, which
+  is gitignored and not in the clone).
+
+### Re-verification results (all confirmed independently, observation-level)
+
+- Frozen dataset re-verified from the parquet, not the manifest: 58,320 rows /
+  7,290 semantic pairs / 1,240 families / 2,514 unique ordered transitions;
+  cells 19,360×{TARGET,DISTRACTOR,REVERSE}+240 NULL_AA; variants perfectly
+  balanced (29,160 per level of query_order/format/preamble); distractor
+  flavors 9,680+9,680; splits and pools match the manifest; no value/name/
+  entity leakage into train (test_value = {charcoal, lavender, cream, green},
+  S-only; test_name = 10 names, N-only; test_entity = 5 nonces).
+- Caption re-verification, all 58,320 rows, five checks (round-trip re-render,
+  cross-format canonical equality, sha256, caption-vs-answer semantics,
+  edited-entity token identity): **0 failures**. The last two checks are new
+  (not in the prior entry). NULL_AA rows are identical prompts (delta exactly
+  zero) and all plumbing_only.
+- Link integrity (new check): 4,840 `crossed_with` + 2,420 `reverse_of` links;
+  0 dangling; all crossed pairs share the edit and differ in query; all
+  reverse pairs swap values; no link crosses a split boundary.
+- Injection contract re-read in code, matches the prior entry: layer 20 =
+  block-20 output = HF hidden_states[21] (`extractors.py` hook); AV =
+  embedding-row replacement at ㈎ id 149705 with neighbor check
+  (`injection.py`); vector rescaled to L2=150 from the sidecar (config.py:
+  absent key → None → assert, no sqrt_d default); AR = truncated 21-block
+  backbone, final-LN→Identity, Linear(d,d) value head, last-token anchored,
+  direction-only 2(1−cos); `resolve_embed_scale` = arch multiplier (1.0 Qwen)
+  in nla_inference.py only.
+- Qwen3-8B prior patching artifacts: **still absent** (no logs, model/layer/
+  site/patch formula anywhere in research/). Fourth flag; Amendment 1 §11.2
+  citation embargo remains in force. v1 doc §14 sources them to two files on
+  the user's local machine (`/Users/vishesh/Desktop/temporal nlas/…`).
+
+### New gaps found this session (docs ↔ docs, docs ↔ code, entry ↔ source)
+
+1. **ARTIFACTS.md missing entry header** — the Amendment-1 §11 block (commit
+   c0db220) had no `## date — title` line and read as a continuation of the
+   orientation entry. Restored above.
+2. **`nla/schema.py:82–84` docstring contradicts `nla/config.py:176–182`** —
+   `resolve_target_scale`'s docstring says "Key-absent in sidecar is NOT None
+   — config.py supplies sqrt_d_model as the default to .get()". True only for
+   `mse_scale`; false for `injection_scale`. Second instance of the known
+   design.md §2 embed-scale contradiction, this time in the shared schema
+   module both readers import.
+3. **Position-floor statement sharpened** (prior entry said "half the dataset
+   is OOD in position"): by format×preamble cell (14,580 rows each) —
+   raw/no-preamble final_pos 18–30, **100% below** the released AV's
+   `_MIN_POSITION=50`; chat/no-preamble 47–59, **29.3% below** (straddles);
+   both preamble cells ≥90, 0% below. Total below floor: 18,848 rows (32.3%).
+   Stage B.1 parity must therefore be reported per **format×preamble cell**
+   (4 cells), not per preamble (2). Plot:
+   `plots/2026-07-19_v1_final_pos_vs_training_floor.png`.
+4. **Two different transition-multiplicity statistics** (prior plot/entry used
+   answer-transitions: TARGET+REVERSE pairs only; city max 10, median 5, names
+   92% singletons — verified correct for that quantity). The statistic that
+   feeds the `E[Δ|old,new]` prototype baseline is **edit**-transition
+   multiplicity including DISTRACTOR cells: city max 15 (Tokyo↔Singapore),
+   median 5; colors median 3, max 9; names median 2, 46% singletons. Both are
+   over the same 2,514 unique ordered transitions. Implication for §8
+   controls: an "unrelated real delta" control must be defined to exclude
+   same-transition pairs, or it is contaminated by the shared prototype and
+   is not a null.
+5. **Prior entry's Bauer quote lacked its own qualifier** — the paper says
+   "We do **not** have a formal ablation for this" immediately before the
+   "every run that did NLA-style injection performed significantly worse"
+   sentence, and nanoNLA's README now says the maintainer is no longer
+   confident additive is better. Additive-vs-replacement is unsettled;
+   registry row updated.
+6. **Jakkli AO numbers need the Bauer §A.1 rebuttal attached** — near-chance
+   sycophancy AUC is "largely a calibration artifact" (AOs default to "No");
+   Yes/No token-logit margin gives 0.83 ROC AUC. Consequence for us: **score
+   AO/probe baselines on logit margins or AUC, never sampled-string
+   accuracy** — otherwise we sandbag the boring baseline. Registry row
+   updated.
+7. **Chalnev gap range corrected** in the registry: probes beat decoder
+   extraction on *every* task but by ~3–49pp depending on task (AG News ~3pp;
+   Language ID ~44–49pp), not uniformly 20–49pp.
+8. **Frozen-artifact reproducibility is not currently executable**: the
+   pinned tokenizer files are gitignored and absent from this clone, so the
+   README's bit-identical-regeneration check and the integration test cannot
+   run until the pinned-SHA tokenizer is re-fetched (egress is open, so this
+   is cheap — fold into Stage A setup).
+
+### Ten working conclusions from the session brief vs primary sources
+
+All ten survive, with these calibration notes: (1) turntrout exact — FVE 0.68
+vs 0.70, plausibility 99.3% implausible, 21%→7.6% under RL for plausible-init,
+0.08%→0.7% for implausible-init. (2) The paper itself says surfacing terms
+"generally increase … with an unexplained spike" attributed to possible
+string-matching noise — "moves erratically" is Anurin's (and our) gloss of the
+same figure; the brief's own "suggestive, not established" caveat is the
+paper-accurate reading. (3) loops exact (λ=0.001: −28% tokens at +0.007 FVE;
+λ=0.002: −40% at −0.015; λ=0.03 degenerates to tail-repetition) plus
+turntrout's last-paragraph-only NLA at FVE 0.67 vs 0.70 control. (4) Anurin
+exact — snippets→empty −0.09, →"REDACTED" −0.76 FVE (below mean baseline);
+on-policy constrained sampling (quote bans) barely hurts (0.774→0.757);
+truncated/masked-caption reader training was proposed publicly in the loops
+comments (Karvonen: random-K prefix to the AR). (5) oakhu exact — for Qwen the
+mean-direction "rock" wins **dataset-wide at the trained layer**, all three
+NLAs lose to the within-variant rock, Qwen's NLA does not detect
+problem-constant changes while Gemma-27B's does; steering "corrections" 11/65
+vs 10/65 with random vectors. (6) Chalnev — structure-preserved
+entity-substitution confirmed verbatim (Sarah/marbles for Alice/apples);
+under-extraction vs probes confirmed with the task-dependence caveat above.
+(7) Realmbird — on our exact kitft L20 checkpoints: answer-mention rises
+toward the final answer; higher counterfactual importance ↔ lower
+reconstruction loss. (8) Prabhu exact — 81.4% explanation flip, 99.6% answer
+label unchanged, per-sample optimized vectors (Qwen2.5-7B L20). (9) Fully
+grounded: Anurin replicates Qwen2.5-7B-L20 round-trip FVE 0.748 vs paper
+appendix 0.752 on held-out UltraFineWeb, shuffled-verbalization FVE < −0.6;
+turntrout independently gets 0.70 at 20k docs (vs Anthropic's 0.75 at 100k).
+(10) is our own plotting norm; every strong source above draws its trivial
+baseline (rock bars, shuffle nulls, no-activation floors).
+
+Additional constraints registered from the papers proper: AV scaling factor
+α ≈ 75th-percentile activation norm at the target layer (explains sidecar 150
+≫ ambient √d≈59.9); AR trained without chat formatting on the `<summary>`
+suffix; Anurin: the AR value head is near-identity (+0.007 FVE) on Gemma-27B;
+Anurin's zero-shot diff-of-means verbalization (anger/pirate/Russian visible,
+SAE directions mostly not) is the closest public precedent for our Stage B.3
+zero-shot delta reading — qualitative only, no exact fields; AObench's
+"Activation Sensitivity" task (same tokens, different upstream context) is
+direct precedent for our crossed pairs.
+
+### Interpretation (kept separate)
+
+The frozen dataset and injection-contract facts are solid under independent
+re-derivation; nothing found invalidates any frozen artifact. The genuinely
+open debts before GPU spend are unchanged (Qwen3-8B artifact import; one
+reconciliation sentence for §5.8-vs-Stage-C/D wording) plus three new small
+ones from this session: define the "unrelated delta" control to exclude
+same-transition pairs (finding 4), commit to margin/AUC scoring for AO/probe
+baselines (finding 6), and pre-register the expected parity outcome per
+format×preamble cell before Stage B.1 (finding 3) so a raw/no-preamble parity
+failure is not spent as if it were news.
+
+- Plots: `plots/2026-07-19_v1_final_pos_vs_training_floor.png` (new);
+  prior session's two plots re-verified against independent recomputation.
+- Next: Stage A unchanged as the recommended next action (see chat summary);
+  before GPU spend, user sign-offs wanted on: preamble text (PROVISIONAL),
+  name-survivor list, slot2 R4/R6 retention, and (if available) the Qwen3-8B
+  patching logs for import.
 
 - Phase: exploration (orientation; no experiments run)
 - Question: is the project state internally consistent (docs ↔ code ↔ frozen
@@ -172,6 +329,8 @@ that save the most compute later.
   Qwen2.5-7B-Instruct at the pinned revision, no NLA checkpoints, and its
   margin-recovery number gates everything downstream. Set `HF_HOME` to the
   NFS volume first.
+
+## 2026-07-18 — Amendment 1 §11 revisions applied (renderer r2)
 
 - Phase: execution
 - What changed (all four review decisions accepted by user):
