@@ -92,7 +92,13 @@ exploratory reports. Binding facts established this session:
   zero-shot names the new value 74% (vs 0% shuffled/random). A diverse
   warm-start will read `old→new` robustly, incl. new values.
 - **The delta is behaviorally BLIND.** target-vs-distractor AUC ≈ 0.5 at the
-  edit site AND the final position, every layer, both query orders. The
+  edit site AND the final position, every layer, both query orders. Re-checked
+  2026-07-19 under a nonlinear reader (GBM): an apparent query_first-only
+  signal (0.66) is an `edit_pos` template artifact (metadata-only baseline
+  0.87; position-matched GBM 0.51/0.49) — the null stands with the artifact
+  controlled. Standing rule: any discriminator on this dataset must
+  position-match under query_first and report the metadata-only baseline
+  (see `temporary_artifacts/2026-07-19_blindness_recheck_report.md`). The
   behavioral consequence exists only as answer-change MAGNITUDE at the final
   position, layers 24–28 (norm-AUC → 0.99) — and the AV interface erases
   magnitude (injection_scale=150). So the channel reads *which token changed*,

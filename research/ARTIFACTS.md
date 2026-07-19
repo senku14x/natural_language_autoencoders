@@ -27,6 +27,43 @@ that save the most compute later.
 
 ---
 
+## 2026-07-19 — Blindness null re-checked under a nonlinear reader: the 0.66 query_first GBM signal is an edit_pos ARTIFACT; the null stands, on stronger footing
+
+- Phase: validation (adversarial check of a load-bearing null; triggered by a
+  user-supplied re-analysis claiming GBM AUC ~0.63 under query_first with
+  query_last at chance = a real nonlinearly-coded relevance signal). Report
+  `temporary_artifacts/2026-07-19_blindness_recheck_report.md`; scripts
+  `exploratory/recheck_blindness_nonlinear.py` (user's, run verbatim),
+  `exploratory/blindness_position_control.py` (diagnostics + corrected null).
+  Cached position_sweep artifacts only; no GPU.
+- Observations:
+  1. User's result REPRODUCES (slightly stronger): raw/pre value-matched GBM
+     query_first 0.658 [0.641–0.692], query_last 0.505; linear 0.42/0.48.
+  2. **`edit_pos` alone classifies at 0.868 under query_first** (0.537
+     query_last); metadata-only (edit_pos+stratum+value, no activations)
+     0.867/0.535 — exceeds the GBM-on-delta and reproduces its "causal
+     dissociation." Mechanism: under query_first the upstream query text
+     shifts the edit token's absolute position class-correlatedly (target
+     mean 89.0 vs distractor 87.6); position information is in the state.
+  3. **Exact per-position 50/50 matching kills the delta signal: GBM 0.511
+     [0.45–0.58] query_first, 0.489 query_last.**
+- Interpretation (separate): the "confound wouldn't respect causal masking"
+  argument fails in general — any query-correlated SURFACE feature is also
+  only available under query_first. **The blindness null stands**, now earned
+  against a nonlinear reader with the position artifact controlled, both query
+  orders. The critique's methodological half is adopted: linear-only nulls are
+  inadequate for "not groundable" claims (the AV is nonlinear), and
+  variance-ranked PCA positive controls do not certify low-variance
+  sensitivity (planted-direction checks adopted as habit). Caveats: matched
+  n≈164 detects ≳0.65 reliably, cannot exclude <0.6 residual; EXP-1's
+  layer-sweep null is still linear-only (lower artifact exposure — no
+  class-correlated position shift at the shared final position — but the
+  nonlinear re-run is the cheap outstanding item).
+- Standing rule added: any discriminator on this dataset must position-match
+  (or covariate-control edit_pos) under query_first and report the
+  metadata-only baseline alongside.
+- Next: derived-relation pivot premise unchanged.
+
 ## 2026-07-19 — test_value (registered single spend): the SFT'd reader NAMES held-out values — 0.94/0.96 held-side, misses are surface garbles, not substitutions
 
 - Phase: validation (reader-generalization crux, cruxes §C3 / probe item 4).
