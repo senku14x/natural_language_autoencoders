@@ -80,7 +80,7 @@ Papers (read before designing experiments that depend on them):
 | NLA length penalties (loops) | https://www.lesswrong.com/posts/NazprRfWJ4qkwcSro/nla-explanations-can-be-shortened-without-harming | 28–40% shorter explanations at ~0.015 FVE cost — heavy redundancy; supports rigid one-line captions over prose. |
 | Hiding from an NLA (Prabhu) | https://www.lesswrong.com/posts/3oRQxpxn4LiWKwbeQ/can-you-hide-from-a-natural-language-autoencoder | 81.4% explanation-flip with 99.6% behavior preservation via prefix-tuning — verbalizers are attackable; blocks any monitor claim without adversarial eval. |
 | NLAs as summarizers (Anurin) | https://www.lesswrong.com/posts/4nZwNPyfoadAxPH98/natural-language-autoencoders-are-summarizers-but-do-they | Snippet ablation drops FVE 0.77 → −0.76; cross-family transfer 0.51–0.68. Grounds the text-inversion / decoder-prior control family. |
-| Matryoshka NLAs | (PDF not yet in repo — still no public paper as of 2026-07-19; ask user) | The term was coined publicly in the length-penalty post's comments (nostalgebraist + Karvonen: graded prefixes / random-K truncated captions to the AR). Public artifacts exist without a paper: `syvb/nla-qwen2.5-7b-L20-av-matryoshka-sonnet46` + `-ar-` (our exact model+layer) and `syvb/nla-ordered-features-{av-sft,ar-sft,rl}` on HF. The PDF itself is presumably unpublished — do not cite or commit it if provided (confidentiality rule). |
+
 
 Code scaffolds:
 
