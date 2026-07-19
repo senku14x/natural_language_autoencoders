@@ -1,0 +1,15 @@
+{
+ "heldout_1nn_acc": 0.8897058823529411,
+ "heldout_n": 136,
+ "heldout_nclass": 5,
+ "heldout_chance": 0.2,
+ "seen_1nn_acc": 0.5642633228840125,
+ "seen_nclass": 37,
+ "held_out_colors": [
+  "charcoal",
+  "cream",
+  "green",
+  "lavender",
+  "turquoise"
+ ]
+}

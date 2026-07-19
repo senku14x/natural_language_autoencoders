@@ -7,3 +7,6 @@ __pycache__/
 # Stage A activation/logit caches — large and regenerable from research/stage_a/*.py.
 # fp16 logit caches ~1.5 GB each; L20 state arrays ~69 MB each.
 artifacts/v1/stage_a/*.npy
+
+# All-layer final-position cache (~330 MB, regenerable from consequence_and_heldout.py).
+artifacts/v1/consequence_heldout/final_delta_alllayers.npy

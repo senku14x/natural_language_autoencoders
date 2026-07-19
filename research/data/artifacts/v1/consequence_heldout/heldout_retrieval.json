@@ -1,0 +1,25 @@
+{
+  "chance_top1": 0.023809523809523808,
+  "n_candidates": 42,
+  "held_out_colors": [
+    "charcoal",
+    "cream",
+    "green",
+    "lavender",
+    "turquoise"
+  ],
+  "value_new": {
+    "dev_seenvalue_heldfamily_top1": 0.3884920634920635,
+    "heldout_value_top1": 0.0,
+    "heldout_value_top3": 0.0,
+    "n_heldout_rows": 136,
+    "all_testvalue_top1": 0.2875
+  },
+  "value_old": {
+    "dev_seenvalue_heldfamily_top1": 0.3884920634920635,
+    "heldout_value_top1": 0.0,
+    "heldout_value_top3": 0.0,
+    "n_heldout_rows": 136,
+    "all_testvalue_top1": 0.2875
+  }
+}

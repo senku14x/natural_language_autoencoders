@@ -27,6 +27,84 @@ that save the most compute later.
 
 ---
 
+## 2026-07-19 — Exploratory: consequence is late-final MAGNITUDE only; unseen values ARE consistently represented
+
+- Phase: exploration. Probe-only; test_value used with explicit user approval.
+  Reports `temporary_artifacts/2026-07-19_consequence_heldout_report.md` and
+  forward-looking `docs/NEW_WARMSTART_CRUXES.md`; scripts
+  `research/exploratory/{consequence_and_heldout,consequence_heldout_diag,
+  plots_consequence_heldout}.py`; data `data/artifacts/v1/consequence_heldout/`.
+- EXP-1 (final-position layer sweep, 1,656 dev change+distractor rows,
+  target-vs-distractor AUC by layer): **direction (unit-normalized) ≈ 0.5 at
+  every layer, both query orders** — no readable relevance direction anywhere.
+  Diagnostic D1 (delta NORM): rises late — L20 0.667, L24 0.971, L28 0.985
+  (median target norm 154 vs distractor 47). Consequence = answer-change
+  MAGNITUDE forming at L24–28 (answer formation), which the AV interface
+  erases (injection_scale=150). Ties to Stage A (final-L20 1.4% causal because
+  the answer forms later).
+- EXP-2 (held-out-value generalization): embedding-retrieval held-out top1
+  **0.000** was a WRONG-TARGET artifact (seen values only 0.388 vs input
+  embedding). Diagnostic D2 (decoder-free leave-family-out 1-NN among held-out
+  rows): **0.890** (5 unseen colors, chance 0.20) > seen reference 0.564.
+  Unseen values ARE consistently/separably represented — a general token code,
+  not a per-value lookup; a closed-vocab decoder just can't NAME them.
+- Interpretation (separate): still the token-identity story, now fully mapped.
+  Value/transition identity = general, position-invariant, extends to unseen
+  values → a diverse warm-start will read old→new robustly. Consequence is not
+  a readable direction at any site; only late-final answer magnitude (erased by
+  the interface). Real progress = derived-relation families (make consequence-
+  reading distinguishable from token-naming) + a magnitude/availability channel
+  (to ground NO_CHANGE) — see NEW_WARMSTART_CRUXES.md.
+- Method lesson recorded: both raw numbers were misleading (normalized away the
+  magnitude signal; scored against the wrong target space) — caught only by the
+  direction-vs-magnitude split and a decoder-free control.
+- Plots: `plots/2026-07-19_final_layer_sweep.png`,
+  `plots/2026-07-19_heldout_value_retrieval.png`.
+
+## 2026-07-19 — Exploratory: position-invariant value basis (confirmed) but edit-site delta is behaviorally BLIND
+
+- Phase: exploration. Follow-on to the zero-shot AV read; probe-only, no new
+  prompts, **test_value untouched**. Report
+  `temporary_artifacts/2026-07-19_position_sweep_report.md`; script
+  `research/exploratory/probe_position_sweep.py`; data
+  `data/artifacts/v1/position_sweep/`.
+- Question: (A) tighten CIs / more prompts; (B) is the value basis
+  position-invariant across edit positions; (C) does the edit-site delta
+  encode behavioral relevance or only token identity?
+- Setup: edit-position L20 states for all 1,656 eligible dev change +
+  distractor rows across cells (edit-pos 3–122). Linear probe (PCA→logreg,
+  GroupKFold by family, direction-only).
+- Observations (dev, this setup):
+  - (A) old~delta ≈ new~delta, tightened: colors 0.945 [0.91,0.97],
+    names 0.870 [0.83,0.95] (names up from 0.76 with more data).
+  - (B) **basis is position-invariant** — cross-position transfer (colors,
+    new value) 0.92–1.00 off-diagonal for delta AND h_cf state, position 3→122;
+    early positions do NOT degrade. Confirms the value representation is a
+    stable position-general direction (= token identity).
+  - (C) **edit-site delta is behaviorally blind** — target-vs-distractor
+    discriminability at the edit site AUC 0.508 (query_last) / 0.473
+    (query_first) / 0.495 (both), i.e. **chance in both query orders**, while
+    the edited value is decodable from distractor deltas (colors 0.95, names
+    0.93). Which value changed is present (~95%); whether it matters to the
+    answer is absent.
+- Interpretation (separate): basis-invariance confirms the BORING reading
+  (stable token identity), not consequence-reading. (C) directly demonstrates
+  the "names the changed token, not the consequence" alternative (v1 §5.4),
+  holding even under query-first. Clean dissociation with Stage A: edit site =
+  what changed (identity, causally sufficient because edited==answer for
+  TARGET), final site = that the output differs (consequence, computed
+  downstream); neither single site reads a behavioral difference — as v1 §4's
+  causal-attention argument predicts. Consequence for "verbalise the diff":
+  YES for the transition slot (old→new, robust/position-invariant/held-out-
+  family) — on-plan since v1 captions are transition-only — but the claim is
+  firmly capped at an answer-transition token code; the language-earns-its-keep
+  question lives entirely in held-out VALUES and derived-relation families.
+- Plots: `plots/2026-07-19_position_transfer.png`,
+  `plots/2026-07-19_target_distractor_auc.png`.
+- Next: user review. Not committed. Real discriminators remain held-out values
+  (test_value — untouched) and derived families; the edit-site delta will not
+  ground a consequence/NO_CHANGE claim.
+
 ## 2026-07-19 — Exploratory: zero-shot AV reads new-value TOKEN IDENTITY from edit-site deltas (74% vs 0% floor)
 
 - Phase: exploration. **Not Stage B, not a verbalizer result.** One cheap
