@@ -73,6 +73,14 @@ Papers (read before designing experiments that depend on them):
 | Activation Oracles | https://arxiv.org/abs/2512.15674 · https://alignment.anthropic.com/2025/activation-oracles/ | Karvonen et al. 2025 — LatentQA-style general-purpose activation explainers; the AO baseline family. |
 | Building Better Activation Oracles | https://arxiv.org/abs/2606.02609 | Bauer et al. 2026 — on-policy AO training, improved injection formula, multi-layer feeds, and AObench (eval suite). |
 | Current Activation Oracles Are Hard To Use | https://www.lesswrong.com/posts/LXQBcztrWKhtcgQfJ/current-activation-oracles-are-hard-to-use | Practitioner-side failure modes of current AOs; motivates the usability bar. |
+| NLA robustness (Zhang & Turner) | https://turntrout.com/natural-language-autoencoder-robustness | Implausible-init NLA reaches FVE 0.68 vs 0.70 control while plausibility stays 0.7% vs 7.6% — reconstruction cannot certify caption truth. Grounds the exact-grading + activation-dependence controls. |
+| Internal chain-of-thought eval (oakhu & ryan_greenblatt) | https://www.lesswrong.com/posts/QQQAcKuWK6k98FivY/can-activation-verbalizers-surface-an-internal-chain-of-1 | Qwen2.5-7B NLA showed FVU > 1 on OOD short prompts; poor cross-layer generalization; final-token most informative. Grounds the Stage B.1 parity gate. |
+| Cycle-consistent activation oracles (Chalnev) | https://www.lesswrong.com/posts/Nf2sKaNNdxE2ssxbp/cycle-consistent-activation-oracles-1 | Probes beat decoder extraction by 20–49pp; cycle consistency ≠ faithfulness. Grounds the probe-vs-AV interpretation rule (§10 of the v1 doc). |
+| NLA thought anchors (Realmbird) | https://www.lesswrong.com/posts/6HnnMHRoJLff46kgw/nla-thought-anchors | GSM8K pipeline on our exact kitft L20 checkpoints; answer-containment and reconstruction-loss observations. |
+| NLA length penalties (loops) | https://www.lesswrong.com/posts/NazprRfWJ4qkwcSro/nla-explanations-can-be-shortened-without-harming | 28–40% shorter explanations at ~0.015 FVE cost — heavy redundancy; supports rigid one-line captions over prose. |
+| Hiding from an NLA (Prabhu) | https://www.lesswrong.com/posts/3oRQxpxn4LiWKwbeQ/can-you-hide-from-a-natural-language-autoencoder | 81.4% explanation-flip with 99.6% behavior preservation via prefix-tuning — verbalizers are attackable; blocks any monitor claim without adversarial eval. |
+| NLAs as summarizers (Anurin) | https://www.lesswrong.com/posts/4nZwNPyfoadAxPH98/natural-language-autoencoders-are-summarizers-but-do-they | Snippet ablation drops FVE 0.77 → −0.76; cross-family transfer 0.51–0.68. Grounds the text-inversion / decoder-prior control family. |
+| Matryoshka NLAs | (PDF not yet in repo — no public copy found; ask user) | Referenced in session instructions; likely the importance-ordered-explanation line behind the syvb nanoNLA collection. |
 
 Code scaffolds:
 
@@ -81,6 +89,10 @@ Code scaffolds:
 | natural_language_autoencoders | https://github.com/kitft/natural_language_autoencoders | Main scaffold (this repo's upstream): data gen, SFT, GRPO RL, activation injection via `input_embeds`, checkpoint conversion. |
 | nla-inference | https://github.com/kitft/nla-inference | Lightweight inference client; reference for injection mechanics. |
 | jacobian-lens | https://github.com/anthropics/jacobian-lens | Apache-2.0 J-lens reference (fit/apply/visualize on HF decoders). Baseline + layer-selection sanity checks; not on the critical path. |
+| EasyNLA (asherps) | https://github.com/asherps/EasyNLA | Distributed nanoNLA fork, Qwen3-8B L24. **Different injection default from official**: Karvonen-style additive norm-matched injection at an early layer, not embedding replacement at the marker token. |
+| nanoNLA (ceselder) | https://github.com/ceselder/nanoNLA | Minimal single-GPU NLA reimplementation (Qwen3-8B, LoRA, HF generate). Same additive-injection deviation as EasyNLA. |
+| nla-thought-anchors (Realmbird) | https://github.com/Realmbird/nla-thought-anchors | Working SGLang pipeline for our exact kitft L20 AV/AR checkpoints (radix cache off, batch/OOM workarounds documented). No license file — ask before reusing code. |
+| syvb HF collection | https://huggingface.co/syvb | Qwen3-8B L24 nanoNLA AV/AR/RL-LoRA checkpoints plus released completions/results datasets — an independent checkpoint family for later replication. |
 
 Interactive demos (intuition, not evidence): https://www.neuronpedia.org/jlens
 and the NLA demo linked from
