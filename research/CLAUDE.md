@@ -42,6 +42,11 @@ Before doing any research work in a session, read in order:
    the cross-paper synthesis; read together with the context doc.
 6. `research/ARTIFACTS.md` — running log of reports and result analyses; check
    it to see what has already been run and found.
+7. `research/temporary_artifacts/2026-07-19_SESSION_HANDOFF.md` — **the GPU
+   work is done through Stage A + an exploratory arc (dev split).** Read this
+   before re-running anything; it has the full order, numbers, and decision
+   state. Companion: `research/docs/NEW_WARMSTART_CRUXES.md` — cruxes, fixes,
+   and the go/no-go probe checklist for the next diverse-warm-start build.
 
 ## Repo facts that constrain the plan (verified in code, 2026-07-18)
 
@@ -61,6 +66,54 @@ Before doing any research work in a session, read in order:
   template. Short task prompts are OOD in both position and style — the
   ordinary-activation parity check (Stage B.1) is load-bearing before any
   delta result is interpreted.
+
+## Empirical findings (2026-07-19, dev split — read before re-running)
+
+Full detail: `temporary_artifacts/2026-07-19_SESSION_HANDOFF.md` + the four
+exploratory reports. Binding facts established this session:
+
+- **Stage A: substrate = EDIT-TOKEN position, not the final position.** The
+  pre-registered final-position delta FAILS the causal gate (median margin
+  recovery 0.014); the edit-token L20 delta PASSES (0.983, 100% direction,
+  both strata/query orders; all-positions positive control = 1.000). Use the
+  edit-token site; raw/preamble is the primary cell (74% eligible; chat/nopre
+  is behaviorally dead — the PROVISIONAL preamble is load-bearing). No dataset
+  regeneration needed (edit positions 74–98 clear the AV floor).
+- **The edit-site delta is a general, position-invariant TOKEN-IDENTITY code
+  for the value transition.** old/new each ~0.95(colors)/0.87(names) linearly
+  decodable; basis stable across edit-pos 3→122; **unseen values are
+  consistently represented** (0.89 leave-family-out 1-NN). Released AV
+  zero-shot names the new value 74% (vs 0% shuffled/random). A diverse
+  warm-start will read `old→new` robustly, incl. new values.
+- **The delta is behaviorally BLIND.** target-vs-distractor AUC ≈ 0.5 at the
+  edit site AND the final position, every layer, both query orders. The
+  behavioral consequence exists only as answer-change MAGNITUDE at the final
+  position, layers 24–28 (norm-AUC → 0.99) — and the AV interface erases
+  magnitude (injection_scale=150). So the channel reads *which token changed*,
+  not *whether it matters*; and for TARGET rows edited==queried, so the two
+  are confounded by construction. Consequence/NO_CHANGE are NOT groundable
+  from this dataset's edit-site delta.
+- **Implication:** the real leverage is **derived-relation families** (answer ≠
+  edited token) + a magnitude/availability channel — not more transition data.
+  Unrun: within-prompt position sweep (only edit + final checked; pre-edit
+  deltas are exactly zero).
+
+## Interface gotchas verified this session (silent failure modes)
+
+- **NFKC drops the injection token:** `apply_chat_template(tokenize=True)`
+  rewrites ㈎ (U+320E → "(가)"). Use two-step
+  `apply_chat_template(tokenize=False)` → `tokenizer(rendered,
+  add_special_tokens=False)`.
+- **Forwards are batch-shape-dependent** (bf16, ~0.6 logit / ~2.6 h20-norm
+  across shapes). Use one canonical shape (B=64, L=131, left-pad, explicit
+  `position_ids`) for every measurement forward — then results are bitwise
+  reproducible and NULL_AA deltas are exactly zero.
+- **Serving:** injection is client-side → generate in-process via
+  `generate(inputs_embeds=…)` reusing `nla_inference` pure functions; Qwen
+  needs no SGLang patch.
+- **GPU-stage setup:** `HF_HOME` → persistent volume; pin
+  `transformers==5.14.1`; model+tokenizer at SHA `a09a3545…` already on the
+  volume; canonical shape + epsilon-guard notes in the Stage A report.
 
 ## Required reading (external sources)
 
