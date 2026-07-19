@@ -27,6 +27,79 @@ that save the most compute later.
 
 ---
 
+## 2026-07-19 — Orientation #3 (fresh instance): spot-check audit of both prior orientations, sidecar verified from HF release, methods doc arrived (no GPU work)
+
+- Phase: exploration (orientation; no experiments run). Mode per session brief:
+  absorb + spot-check + extend, not re-derive.
+- Question: do the prior orientations' findings survive independent spot checks
+  against the parquet, the code, and the primary sources; and what changed on
+  this (new) instance before Stage A can run?
+- Setup: **new** fresh H100 SXM 80GB instance (sm_90, driver 580.105.08, CUDA
+  12.8/nvcc 12.8.93, torch 2.7.0+cu128 preinstalled, Python 3.12.3).
+  Persistent volume is `/home/ubuntu/counterfactualnlas` (virtiofs) — **not**
+  the prior report's `/lambda/nfs/cot-oracle`; volume was empty, repo cloned
+  fresh at `counterfactual_nla_v2` (HEAD 639300a). `HF_HOME` unset (flag
+  stands). **transformers absent on this instance** (prior fingerprint stale);
+  pyarrow 25.0.0 / pandas 2.1.4 / pytest installed user-level this session.
+  Egress open. Tests: 65 passed, 1 skipped (`-p no:libtmux`; pinned tokenizer
+  still absent from clone).
+- Observations (all observation-level):
+  - Frozen dataset spot-checked from the parquet: every prior number
+    confirmed exactly — 58,320/7,290/1,240/2,514 (edit transitions);
+    cells, variant balance, splits, distractor flavors; held-out sets
+    {charcoal, cream, green, lavender} S-only / 10 names N-only / 5 nonces,
+    zero train leakage; NULL_AA 240 all plumbing_only; position floor per
+    format×preamble cell (100% / 29.3% / 0% / 0% below 50; 18,848 = 32.3%
+    total); values audit 42/52, 91/124, 80/85, 24/24.
+  - Caption audit re-run dataset-wide with the repo renderer/parser: 58,320
+    rows × (round-trip ×4 + cross-format canonical equality + sha256 ×4) →
+    **0 failures**. Link integrity: 38,720 crossed + 19,360 reverse row-level
+    links (= 4,840/2,420 semantic ×8), 0 dangling, 0 cross-split.
+  - Injection contract re-confirmed in code (replacement at ㈎ w/ neighbor
+    check; config.py absent-injection_scale → None → assert; schema.py:82–84
+    docstring wrong for injection_scale; 1e-12 clamp / missing epsilon guard;
+    `_MIN_POSITION=50`; AR 21-block final-LN→Identity Linear(d,d) tokens[-1]).
+    **New:** released sidecar fetched from HF
+    (`kitft/nla-qwen2.5-7b-L20-av/raw/main/nla_meta.yaml`, no weights):
+    `injection_scale: 150.0`, `mse_scale: 59.8665… = √3584` exactly, ㈎ id
+    149705, neighbors 29/522, layer 20, exact AV/AR prompt templates —
+    first verification against the released artifact itself.
+  - Literature spot-checks (8 sources, targeted verbatim extraction):
+    turntrout, oakhu, Anurin, Prabhu, loops, Chalnev, Realmbird, nanoNLA
+    README — all prior figures **exact** (details in the standalone report).
+    All ten working conclusions in the session brief survive; none overstated.
+  - Qwen3-8B patching artifacts: **still absent** — fifth flag; §11.2 embargo
+    remains in force. Both README open decisions (NOT_IDENTIFIABLE label;
+    preamble text) still open.
+- Corrections/updates made this session:
+  1. Restored the missing `##` header of the Orientation #1 entry (same
+     failure mode Orientation #2 fixed for the Amendment-1 entry — second
+     occurrence in two days; paste the header template first when appending).
+  2. `research/CLAUDE.md` item 5: `AO_NLA_JSPACE_METHODS_LEARNINGS.md` is now
+     **provided** (commit 639300a, user upload post-Orientation-#2). Read in
+     full; its five sources are all published; content consistent with the
+     context doc.
+  3. `research/CLAUDE.md` Chalnev row: "25–33pp on gender/number" is the
+     **mean-over-tokens** condition (25.4/33.3pp); last-token gaps are
+     19.7/7.7pp. Range ~3–49pp unchanged.
+  4. Flagged, not changed: the oakhu row's "FVU > 1" and "poor cross-layer
+     generalization" phrasings could not be re-verified verbatim in the post
+     body (the confirmed "rock" result carries the same design consequence);
+     possible appendix content or gloss — reword or re-check when convenient.
+- Interpretation (kept separate): three independent audits now agree on every
+  frozen number; the plan's exposure is execution discipline, not design gaps.
+  New instance facts (volume path, missing transformers) are the only
+  regressions; both are setup items, not blockers.
+- Plots: none new (verification-only session; prior sessions' three plots
+  stand).
+- Standalone report: `temporary_artifacts/2026-07-19_orientation3_report.md`.
+- Next: Stage A, pending user confirmation. Recommended order in the report
+  §8; wanted first: preamble sign-off (cheapest, blocks regeneration risk),
+  name survivors, slot2 R4/R6, Qwen3-8B logs, and the three pre-registrations
+  (unrelated-delta excludes same-transition; margin/AUC scoring; per-cell
+  parity expectations) — plus pin transformers==5.14.1 and set HF_HOME to the
+  persistent volume before any download.
+
 ## 2026-07-19 — Orientation #2 (fresh session): independent re-verification, new gaps, literature corrections (no GPU work)
 
 - Phase: exploration (orientation; no experiments run). Independent re-check of
@@ -186,6 +259,11 @@ failure is not spent as if it were news.
   before GPU spend, user sign-offs wanted on: preamble text (PROVISIONAL),
   name-survivor list, slot2 R4/R6 retention, and (if available) the Qwen3-8B
   patching logs for import.
+
+## 2026-07-19 — Orientation #1 (fresh session): docs-vs-code audit, frozen-dataset verification, literature registration (no GPU work)
+
+*(Header restored 2026-07-19 by Orientation #3 — it was missing from the
+original commit and this entry read as a continuation of the one above.)*
 
 - Phase: exploration (orientation; no experiments run)
 - Question: is the project state internally consistent (docs ↔ code ↔ frozen

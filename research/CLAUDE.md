@@ -37,8 +37,9 @@ Before doing any research work in a session, read in order:
    name × contextual-profile design, identity-to-lookup baseline). Not part of
    v1; common-name identity binding is in v1 itself.
 5. `research/docs/AO_NLA_JSPACE_METHODS_LEARNINGS.md` — companion extended
-   methods review referenced by the context doc. **Not yet provided** — if a
-   task depends on it, ask for it rather than guessing its contents.
+   methods review referenced by the context doc. Provided 2026-07-19 (commit
+   639300a). Covers the Activation Oracle line (Karvonen, Jakkli, Bauer) and
+   the cross-paper synthesis; read together with the context doc.
 6. `research/ARTIFACTS.md` — running log of reports and result analyses; check
    it to see what has already been run and found.
 
@@ -75,7 +76,7 @@ Papers (read before designing experiments that depend on them):
 | Current Activation Oracles Are Hard To Use | https://www.lesswrong.com/posts/LXQBcztrWKhtcgQfJ/current-activation-oracles-are-hard-to-use | Practitioner-side failure modes of current AOs (49.4% vague; text inversion; sycophancy AUC ~0.55 vs probe 0.77); motivates the usability bar. **Caveat (Bauer et al. §A.1):** the near-chance sycophancy number is "largely a calibration artifact" — Qwen AOs default to "No"; scoring the Yes/No token-logit margin gives 0.83 ROC AUC. Score our AO baselines on margins/AUC, never sampled-string accuracy. |
 | NLA robustness (Zhang & Turner) | https://turntrout.com/natural-language-autoencoder-robustness | Implausible-init NLA reaches FVE 0.68 vs 0.70 control while plausibility stays 0.7% vs 7.6% — reconstruction cannot certify caption truth. Grounds the exact-grading + activation-dependence controls. |
 | Internal chain-of-thought eval (oakhu & ryan_greenblatt) | https://www.lesswrong.com/posts/QQQAcKuWK6k98FivY/can-activation-verbalizers-surface-an-internal-chain-of-1 | Qwen2.5-7B NLA showed FVU > 1 on OOD short prompts; poor cross-layer generalization; final-token most informative. Grounds the Stage B.1 parity gate. |
-| Cycle-consistent activation oracles (Chalnev) | https://www.lesswrong.com/posts/Nf2sKaNNdxE2ssxbp/cycle-consistent-activation-oracles-1 | Probes beat decoder extraction on every tested task; gap is task-dependent, ~3pp (AG News) to ~49pp (Language ID), 25–33pp on gender/number. Cycle consistency ≠ faithfulness; decoder keeps structure but substitutes entities. Grounds the probe-vs-AV interpretation rule (§10 of the v1 doc). |
+| Cycle-consistent activation oracles (Chalnev) | https://www.lesswrong.com/posts/Nf2sKaNNdxE2ssxbp/cycle-consistent-activation-oracles-1 | Probes beat decoder extraction on every tested task; gap is task-dependent, ~3pp (AG News) to ~49pp (Language ID); 25.4/33.3pp on gender / singular-plural in the **mean-over-tokens** condition (last-token gaps are smaller: 19.7/7.7pp). Cycle consistency ≠ faithfulness; decoder keeps structure but substitutes entities. Grounds the probe-vs-AV interpretation rule (§10 of the v1 doc). |
 | NLA thought anchors (Realmbird) | https://www.lesswrong.com/posts/6HnnMHRoJLff46kgw/nla-thought-anchors | GSM8K pipeline on our exact kitft L20 checkpoints; answer-containment and reconstruction-loss observations. |
 | NLA length penalties (loops) | https://www.lesswrong.com/posts/NazprRfWJ4qkwcSro/nla-explanations-can-be-shortened-without-harming | 28–40% shorter explanations at ~0.015 FVE cost — heavy redundancy; supports rigid one-line captions over prose. |
 | Hiding from an NLA (Prabhu) | https://www.lesswrong.com/posts/3oRQxpxn4LiWKwbeQ/can-you-hide-from-a-natural-language-autoencoder | 81.4% explanation-flip with 99.6% behavior preservation via prefix-tuning — verbalizers are attackable; blocks any monitor claim without adversarial eval. |
